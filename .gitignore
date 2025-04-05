@@ -1,0 +1,5 @@
+*.env
+*.ipynb
+tests/
+address_book.json
+batch_transfer.json

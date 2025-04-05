@@ -1,0 +1,2 @@
+[console_scripts]
+usdc-transfer = cli:cli

@@ -1,0 +1,4 @@
+2025-04-04 22:03:37,354 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-04 22:03:57,226 - INFO - CCIP messageId (pre-send): 6c0fdb58c4cb0f630e112c8ee65a77725938e40d9f94af4d8ec64f364cdd8b1a
+2025-04-04 22:03:58,261 - INFO - CCIP Transfer submitted (Type 2): da2bd1ab363988d7b7d15ba1a9fc0fefe928f25cf87036c7dc4fc1538ca064ef | View: https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0xda2bd1ab363988d7b7d15ba1a9fc0fefe928f25cf87036c7dc4fc1538ca064ef
+2025-04-04 22:03:58,262 - INFO - CCIP Transfer Submitted: None

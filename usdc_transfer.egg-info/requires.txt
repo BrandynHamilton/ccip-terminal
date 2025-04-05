@@ -1,0 +1,16 @@
+pandas
+numpy
+web3
+requests
+python-dotenv
+click
+twilio
+
+[fiat-ramps]
+flask
+requests
+apscheduler
+
+[scheduler]
+apscheduler
+flask

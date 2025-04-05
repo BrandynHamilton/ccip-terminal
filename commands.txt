@@ -1,0 +1,11 @@
+# Local Usage
+pip install -e .[scheduler]
+pip install -e .[fiat-ramps]
+pip install -e .[fiat-ramps,scheduler]
+pip install -e .[all]
+
+
+# Published to PyPi
+pip install usdc-transfer
+pip install usdc-transfer[fiat-ramps,scheduler]
+pip install usdc-transfer[all]
