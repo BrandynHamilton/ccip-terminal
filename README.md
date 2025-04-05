@@ -1,4 +1,4 @@
-# 🔁 `usdc-transfer` CLI Documentation
+# 🔁 `usdc-transfer` Documentation
 
 **usdc-transfer** is a Python package and CLI for managing cross-chain USDC transfers using Chainlink CCIP.  
 It supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitoring, and address book utilities.
