@@ -3,136 +3,184 @@
 **usdc-transfer** is a Python package and CLI for managing cross-chain USDC transfers using Chainlink CCIP.  
 It supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitoring, and address book utilities.
 
+## Installation
+
+```bash
+pip install -e .
+```
+
+## CLI Usage
+
+```bash
+python cli.py [COMMAND] [OPTIONS]
+```
+
+## Commands
+
+### transfer
+
+Send a USDC transfer via Chainlink CCIP.
+
+#### Options
+
+| Option           | Description                                 |
+|------------------|---------------------------------------------|
+| `--to`           | Destination wallet address                  |
+| `--dest`         | Destination chain                           |
+| `--amount`       | Amount to send                              |
+| `--source`       | (optional) Source chain (default: ethereum) |
+| `--batch-file`   | (optional) Path to batch JSON or CSV file   |
+| `--account-index`| (optional) Account index to use             |
+| `--notify-email` | (optional) Email address to notify          |
+| `--notify-sms`   | (optional) SMS number to notify             |
+
+#### Examples
+
+Single Transfer:
+
+```bash
+python cli.py transfer --to 0xabc... --dest arbitrum --amount 10
+```
+
+Batch Transfer:
+
+```bash
+python cli.py transfer --batch-file ./transfers/batch.json
+```
+
 ---
 
-## 🛠️ Installation
+### ccip-status
 
+Check the status of a CCIP message.
 
-pip install usdc-transfer
-Make sure your .env file contains:
+#### Options
 
-env
-Copy
-Edit
-ETHERSCAN_API_KEY=your_etherscan_key
-ALCHEMY_API_KEY=your_alchemy_key
-INFURA_API_KEY=your_infura_key
-TRANSAK_API_KEY=your_transak_key
-🚀 Transfer Command
-Send USDC using Chainlink CCIP.
+| Option         | Description                             |
+|----------------|-----------------------------------------|
+| `--message-id` | CCIP message ID (with 0x)               |
+| `--dest-chain` | Destination chain                       |
+| `--wait`       | (optional) Wait for confirmation        |
+| `--timeout`    | (optional) Max wait time in seconds     |
+| `--interval`   | (optional) Polling interval in seconds  |
 
-➤ Single Transfer
-bash
-Copy
-Edit
-python cli.py transfer --to 0xRecipient... --dest optimism --amount 10
-➤ Use Non-Ethereum Source Chain
-bash
-Copy
-Edit
-python cli.py transfer --to 0xRecipient... --dest base --source arbitrum --amount 5
-➤ Batch Transfer
-Use a JSON or CSV file with multiple transfer entries.
+#### Example
 
-bash
-Copy
-Edit
-python cli.py transfer --batch-file batch.json
-➤ Send With Notifications
-bash
-Copy
-Edit
-python cli.py transfer \
-  --to 0xRecipient... \
-  --dest optimism \
-  --amount 20 \
-  --notify-email you@example.com \
-  --notify-sms +1234567890
-🧠 Check CCIP Status
-Poll the destination chain for the status of a message.
+```bash
+python cli.py ccip-status --message-id 0xabc... --dest-chain optimism
+```
 
-bash
-Copy
-Edit
-python cli.py ccip-status --message-id 0xYourMsgID... --dest-chain optimism
-➤ Poll Until Success
-bash
-Copy
-Edit
-python cli.py ccip-status \
-  --message-id 0xYourMsgID... \
-  --dest-chain optimism \
-  --wait --interval 15 --timeout 600
-💵 Fiat Onramp (Transak Integration)
-Creates a fiat onramp session via Transak.
+---
 
-bash
-Copy
-Edit
-python cli.py fiat-onramp --wallet 0xYourWallet... --amount 100
-➤ Onramp Gas Instead of USDC
-bash
-Copy
-Edit
-python cli.py fiat-onramp \
-  --wallet 0xYourWallet... \
-  --amount 20 \
-  --purchase-type gas
-➤ Start Webhook Server for Completion
-bash
-Copy
-Edit
-python cli.py fiat-onramp \
-  --wallet 0xYourWallet... \
-  --amount 50 \
-  --with-webhook
-⏰ Schedule Transfers
-Run future or recurring transfers using cron syntax.
+### fiat-onramp
 
-bash
-Copy
-Edit
-python cli.py schedule-transfer \
-  --to 0xRecipient... \
-  --amount 5 \
-  --dest base \
-  --cron "0 9 * * *"
-📒 Address Book Commands
-➤ Add Address
-bash
-Copy
-Edit
-python cli.py address add --name Alice --address 0xAliceWallet...
-➤ List Addresses
-bash
-Copy
-Edit
+Create a Transak fiat-onramp session.
+
+#### Options
+
+| Option           | Description                        |
+|------------------|------------------------------------|
+| `--wallet`       | Wallet address to receive funds    |
+| `--amount`       | Fiat amount in USD                 |
+| `--network`      | (optional) Target network          |
+| `--purchase-type`| USDC or gas token                  |
+| `--with-webhook` | (optional) Run webhook listener    |
+
+#### Example
+
+```bash
+python cli.py fiat-onramp --wallet 0xabc... --amount 100
+```
+
+---
+
+### schedule-transfer
+
+Schedule a recurring transfer using cron.
+
+#### Options
+
+| Option           | Description                         |
+|------------------|-------------------------------------|
+| `--to`           | Destination wallet address          |
+| `--amount`       | Amount to send                      |
+| `--dest`         | Destination chain                   |
+| `--source`       | (optional) Source chain             |
+| `--account-index`| (optional) Account index            |
+| `--cron`         | Cron expression                     |
+
+#### Example
+
+```bash
+python cli.py schedule-transfer --to 0xabc... --amount 5 --dest optimism --cron "0 9 * * *"
+```
+
+---
+
+### address
+
+Manage a local address book.
+
+#### Subcommands
+
+- `add` → Save a new address
+- `list` → View saved addresses
+- `remove` → Delete an address by name
+
+#### Examples
+
+```bash
+python cli.py address add --name Alice --address 0xabc...
 python cli.py address list
-➤ Remove Address
-bash
-Copy
-Edit
 python cli.py address remove --name Alice
-🔧 Developer Notes
-Modular CLI powered by Click
+```
 
-All transfers use EIP-1559 dynamic gas fees
+---
 
-Chain and address validation is done before execution
+## Project Structure
 
-Works well with automated bots and cloud deployment
+```
+usdc-transfer/
+├── cli.py
+├── usdc_transfer/
+│   ├── core.py
+│   ├── ccip.py
+│   ├── logger.py
+│   ├── accounts.py
+│   ├── env.py
+│   └── ...
+├── fiat_ramps/
+│   ├── transak.py
+│   └── webhook_server.py
+├── scheduler/
+│   └── ...
+├── address_book.json
+├── README.md
+```
 
-🧪 Coming Soon
-🧬 Wallet generation and key encryption
+---
 
-📊 Transfer analytics and performance stats
+## Environment Variables
 
-🧠 LLM-enhanced transfer suggestions
+Create a `.env` file and include:
 
-Created with ❤️ by Optimizer Research
+```
+COINGECKO_API_KEY=
+VAULTSFYI_KEY=
+FLIPSIDE_API_KEY=
+DUNE_API_KEY=
+FRED_API_KEY=
+INFURA_API_KEY=
+ALCHEMY_API_KEY=
+TRANSAK_API_KEY=
+SMTP_USER=
+SMTP_PASSWORD=
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+```
+INFURA_API_KEY is the only required variable.
+---
 
-vbnet
-Copy
-Edit
+## License
 
-
+MIT License
