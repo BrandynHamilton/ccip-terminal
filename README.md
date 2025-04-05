@@ -7,7 +7,7 @@ It supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitorin
 
 ## 🛠️ Installation
 
-```bash
+
 pip install usdc-transfer
 Make sure your .env file contains:
 
@@ -135,5 +135,4 @@ vbnet
 Copy
 Edit
 
-Let me know if you want a CLI auto-generated help message (`--help` examples)
-```
+
