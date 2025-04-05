@@ -6,7 +6,13 @@ It supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitorin
 ## Installation
 
 ```bash
-pip install -e .
+pip install -e .[all]
+
+pip install usdc-transfer 
+pip install usdc-transfer[fiat-ramps]
+pip install usdc-transfer[scheduler]
+pip install usdc-transfer[all]
+
 ```
 
 ## CLI Usage
