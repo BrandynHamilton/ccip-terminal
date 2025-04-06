@@ -4,7 +4,7 @@ import click
 from eth_account import Account
 from getpass import getpass
 from cryptography.fernet import Fernet
-from usdc_transfer.utils import logger
+from usdc_terminal.utils import logger
 
 KEYSTORE_FILE = "wallet_keystore.json"
 ENV_FILE = ".env"

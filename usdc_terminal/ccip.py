@@ -5,11 +5,11 @@ import requests
 from eth_account import Account
 from eth_abi import encode
 from eth_utils import keccak, to_checksum_address
-from usdc_transfer.utils import load_abi, logger, approve_token_if_needed, check_ccip_lane, estimate_dynamic_gas
-from usdc_transfer.accounts import load_accounts
-from usdc_transfer.env import ETHERSCAN_API_KEY
-from usdc_transfer.account_state import get_usdc_data
-from usdc_transfer.metadata import (CHAIN_MAP, FEE_TOKEN_ADDRESS, 
+from usdc_terminal.utils import load_abi, logger, approve_token_if_needed, check_ccip_lane, estimate_dynamic_gas
+from usdc_terminal.accounts import load_accounts
+from usdc_terminal.env import ETHERSCAN_API_KEY
+from usdc_terminal.account_state import get_usdc_data
+from usdc_terminal.metadata import (CHAIN_MAP, FEE_TOKEN_ADDRESS, 
                                     CHAIN_SELECTORS, ROUTER_MAP)
 
 abis = load_abi()
@@ -223,7 +223,7 @@ def check_ccip_message_status(message_id_hex, dest_chain, wait=False, poll_inter
         print(f"⏳ Attempt {attempts}/{max_retries} – retrying in {poll_interval}s...")
         time.sleep(poll_interval)
 
-def get_ccip_fee_api(to_address,source_chain,dest_chain,amount,account_index=0):
+def get_ccip_fee_api(to_address,source_chain,dest_chain,amount,account_index=0,tx_type=2):
 
     account_obj = load_accounts(source_chain)[account_index]
     w3 = account_obj["w3"]
@@ -257,5 +257,5 @@ def get_ccip_fee_api(to_address,source_chain,dest_chain,amount,account_index=0):
     max_fee_per_gas = base_fee + max_priority_fee
     gas_price = w3.eth.gas_price
 
-    estimated_cost = fee + (gas_limit * (max_fee_per_gas if tx_type == 2 else gas_price))
+    estimated_cost = raw_fee + (gas_limit * (max_fee_per_gas if tx_type == 2 else gas_price))
     return estimated_cost

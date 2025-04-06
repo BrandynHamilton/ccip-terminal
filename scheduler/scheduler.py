@@ -1,8 +1,8 @@
-# usdc_transfer/scheduler/scheduler.py
+# usdc_terminal/scheduler/scheduler.py
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
-from usdc_transfer.core import send_ccip_transfer
+from usdc_terminal.core import send_ccip_transfer
 from flask import Flask, jsonify
 
 scheduler = BackgroundScheduler()

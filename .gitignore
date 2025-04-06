@@ -3,3 +3,4 @@
 tests/
 address_book.json
 batch_transfer.json
+*.egg-info/

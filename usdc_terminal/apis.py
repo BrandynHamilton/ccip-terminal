@@ -1,5 +1,5 @@
-from usdc_transfer.env import (COINGECKO_API_KEY)
-from usdc_transfer.decorators import api_cache
+from usdc_terminal.env import (COINGECKO_API_KEY)
+from usdc_terminal.decorators import api_cache
 
 import requests
 import pandas as pd

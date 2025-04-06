@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="usdc-transfer",  # Name of your package
+    name="usdc-terminal",  # Name of your package
     version="0.1.0",  # Initial version
     packages=find_packages(),
     install_requires=[
@@ -20,12 +20,12 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "usdc-transfer=cli:cli"
+            "usdc-terminal=cli:cli"
         ]
     },
     author="Brandyn Hamilton",
     author_email="brandynham1120@gmail.com",
-    description="Simple Cross-Chain USDC Transfers",
+    description="Simple Cross-Chain USDC Transfers Powered by CCIP",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url=" ",  # optional

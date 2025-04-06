@@ -2,7 +2,7 @@
 
 from flask import Flask, request
 import threading
-from usdc_transfer.core import send_ccip_transfer
+from usdc_terminal.core import send_ccip_transfer
 from .config import WEBHOOK_PORT
 
 app = Flask(__name__)

@@ -4,14 +4,14 @@ import os
 from pathlib import Path
 import json
 
-from usdc_transfer.logger import logger
-from usdc_transfer.token_utils import get_balance
-from usdc_transfer.accounts import load_accounts
-from usdc_transfer.network import network_func
-from usdc_transfer.ccip import send_ccip_transfer, get_ccip_fee_api, check_ccip_message_status
-from usdc_transfer.notifications import send_email_notification, send_sms_notification
+from usdc_terminal.logger import logger
+from usdc_terminal.token_utils import get_balance
+from usdc_terminal.accounts import load_accounts
+from usdc_terminal.network import network_func
+from usdc_terminal.ccip import send_ccip_transfer, get_ccip_fee_api, check_ccip_message_status
+from usdc_terminal.notifications import send_email_notification, send_sms_notification
 
-def batch_transfer(batch_file, account_index=0):
+def batch_transfer(batch_file, source_network='arbitrum', account_index=0):
 
     batch_file = Path(batch_file)
     if not batch_file.exists():
@@ -52,9 +52,9 @@ def batch_transfer(batch_file, account_index=0):
             continue
 
         try:
-            receipt, message_id = send_ccip_transfer(to_address=to, dest_chain=dest, amount=amount, 
-                                    source_chain=source, account_index=account_index)
-            logger.info(f"Transfer to {to_address} of {amount} USDC successful. TX: {tx_hash}")
+            receipt, message_id = send_ccip_transfer(to_address=to_address, dest_chain=dest, amount=amount, 
+                                    source_chain=source_network, account_index=account_index)
+            logger.info(f"Transfer to {to_address} of {amount} USDC successful. TX: {receipt.TransactionHash.hash()}, messageId: {message_id}")
         except Exception as e:
             logger.error(f"Transfer to {to_address} failed. Error: {e}")
 
