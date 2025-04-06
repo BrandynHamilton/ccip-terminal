@@ -1,3 +1,0 @@
-fiat_ramps
-scheduler
-usdc_transfer
