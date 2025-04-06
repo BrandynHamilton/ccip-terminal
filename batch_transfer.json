@@ -1,0 +1,21 @@
+[
+    {
+      "to_address": "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84",
+      "amount": 1,
+      "dest": "optimism",
+      "memo": "First test transfer"
+    },
+    {
+      "to_address": "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84",
+      "amount": 1,
+      "dest": "arbitrum",
+      "memo": "Bonus payment"
+    },
+    {
+      "to_address": "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84",
+      "amount": 1,
+      "dest": "base",
+      "memo": "Treasury payout"
+    }
+  ]
+  
