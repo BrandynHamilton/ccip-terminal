@@ -1,4 +1,4 @@
-# 🔁 `usdc-transfer` Documentation
+# `usdc-transfer` Documentation
 
 **usdc-transfer** is a Python package and CLI for managing cross-chain USDC transfers using Chainlink CCIP.  
 It can be thought as a self-custodial bridge; it supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitoring, and address book utilities.
@@ -8,7 +8,7 @@ It can be thought as a self-custodial bridge; it supports batch transfers, fiat 
 ```bash
 pip install -e .[all]
 
-pip install usdc-transfer 
+pip install usdc-transfer
 pip install usdc-transfer[fiat-ramps]
 pip install usdc-transfer[scheduler]
 pip install usdc-transfer[all]
@@ -29,16 +29,16 @@ Send a USDC transfer via Chainlink CCIP.
 
 #### Options
 
-| Option           | Description                                 |
-|------------------|---------------------------------------------|
-| `--to`           | Destination wallet address                  |
-| `--dest`         | Destination chain                           |
-| `--amount`       | Amount to send                              |
-| `--source`       | (optional) Source chain (default: ethereum) |
-| `--batch-file`   | (optional) Path to batch JSON or CSV file   |
-| `--account-index`| (optional) Account index to use             |
-| `--notify-email` | (optional) Email address to notify          |
-| `--notify-sms`   | (optional) SMS number to notify             |
+| Option            | Description                                 |
+| ----------------- | ------------------------------------------- |
+| `--to`            | Destination wallet address                  |
+| `--dest`          | Destination chain                           |
+| `--amount`        | Amount to send                              |
+| `--source`        | (optional) Source chain (default: ethereum) |
+| `--batch-file`    | (optional) Path to batch JSON or CSV file   |
+| `--account-index` | (optional) Account index to use             |
+| `--notify-email`  | (optional) Email address to notify          |
+| `--notify-sms`    | (optional) SMS number to notify             |
 
 #### Examples
 
@@ -62,13 +62,13 @@ Check the status of a CCIP message.
 
 #### Options
 
-| Option         | Description                             |
-|----------------|-----------------------------------------|
-| `--message-id` | CCIP message ID (with 0x)               |
-| `--dest-chain` | Destination chain                       |
-| `--wait`       | (optional) Wait for confirmation        |
-| `--timeout`    | (optional) Max wait time in seconds     |
-| `--interval`   | (optional) Polling interval in seconds  |
+| Option         | Description                            |
+| -------------- | -------------------------------------- |
+| `--message-id` | CCIP message ID (with 0x)              |
+| `--dest-chain` | Destination chain                      |
+| `--wait`       | (optional) Wait for confirmation       |
+| `--timeout`    | (optional) Max wait time in seconds    |
+| `--interval`   | (optional) Polling interval in seconds |
 
 #### Example
 
@@ -84,13 +84,13 @@ Create a Transak fiat-onramp session.
 
 #### Options
 
-| Option           | Description                        |
-|------------------|------------------------------------|
-| `--wallet`       | Wallet address to receive funds    |
-| `--amount`       | Fiat amount in USD                 |
-| `--network`      | (optional) Target network          |
-| `--purchase-type`| USDC or gas token                  |
-| `--with-webhook` | (optional) Run webhook listener    |
+| Option            | Description                     |
+| ----------------- | ------------------------------- |
+| `--wallet`        | Wallet address to receive funds |
+| `--amount`        | Fiat amount in USD              |
+| `--network`       | (optional) Target network       |
+| `--purchase-type` | USDC or gas token               |
+| `--with-webhook`  | (optional) Run webhook listener |
 
 #### Example
 
@@ -106,14 +106,14 @@ Schedule a recurring transfer using cron.
 
 #### Options
 
-| Option           | Description                         |
-|------------------|-------------------------------------|
-| `--to`           | Destination wallet address          |
-| `--amount`       | Amount to send                      |
-| `--dest`         | Destination chain                   |
-| `--source`       | (optional) Source chain             |
-| `--account-index`| (optional) Account index            |
-| `--cron`         | Cron expression                     |
+| Option            | Description                |
+| ----------------- | -------------------------- |
+| `--to`            | Destination wallet address |
+| `--amount`        | Amount to send             |
+| `--dest`          | Destination chain          |
+| `--source`        | (optional) Source chain    |
+| `--account-index` | (optional) Account index   |
+| `--cron`          | Cron expression            |
 
 #### Example
 
@@ -172,9 +172,9 @@ Create a `.env` file and include:
 
 ```
 PRIVATE_KEYS=
-COINGECKO_API_KEY = 
+COINGECKO_API_KEY =
 ALCHEMY_API_KEY =
-INFURA_API_KEY = 
+INFURA_API_KEY =
 NOTIFY_EMAIL =
 NOTIFY_PHONE =
 ETHERSCAN_API_KEY =
@@ -186,8 +186,8 @@ TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TWILIO_PHONE_NUMBER=
 ```
-INFURA_API_KEY is the only required variable.
----
+
+## INFURA_API_KEY is the only required variable.
 
 ## License
 

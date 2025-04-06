@@ -2,10 +2,10 @@ import os
 import json
 import click
 
-from usdc_transfer.core import batch_transfer
-from usdc_transfer.ccip import send_ccip_transfer
-from usdc_transfer.notifications import send_email_notification, send_sms_notification
-from usdc_transfer.logger import logger
+from usdc_terminal.core import batch_transfer
+from usdc_terminal.ccip import send_ccip_transfer
+from usdc_terminal.notifications import send_email_notification, send_sms_notification
+from usdc_terminal.logger import logger
 from fiat_ramps import create_transak_session, run_webhook_server
 from scheduler import schedule_ccip_transfer, start_scheduler_server
 
@@ -72,9 +72,9 @@ def transfer(to, dest, amount, source, batch_file, account_index, notify_email, 
 @click.option('--wait', is_flag=True, help='Poll until message is found or timeout is reached.')
 @click.option('--timeout', default=30*60, help='Max time (in seconds) to wait for message status if --wait is set.')
 @click.option('--interval', default=120, help='Polling interval in seconds.')
-def ccip_status(message_id, dest_chain, wait, timeout, max_retries):
+def ccip_status(message_id, dest_chain, wait, timeout,interval,max_retries=120):
     """Check the status of a CCIP message."""
-    from usdc_transfer.monitoring import check_ccip_message_status
+    from usdc_terminal.ccip import check_ccip_message_status
 
     max_retries = timeout // interval if wait else 1
 
