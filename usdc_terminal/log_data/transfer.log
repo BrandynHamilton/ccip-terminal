@@ -2,3 +2,7 @@
 2025-04-04 22:03:57,226 - INFO - CCIP messageId (pre-send): 6c0fdb58c4cb0f630e112c8ee65a77725938e40d9f94af4d8ec64f364cdd8b1a
 2025-04-04 22:03:58,261 - INFO - CCIP Transfer submitted (Type 2): da2bd1ab363988d7b7d15ba1a9fc0fefe928f25cf87036c7dc4fc1538ca064ef | View: https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0xda2bd1ab363988d7b7d15ba1a9fc0fefe928f25cf87036c7dc4fc1538ca064ef
 2025-04-04 22:03:58,262 - INFO - CCIP Transfer Submitted: None
+2025-04-05 22:19:21,206 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on base
+2025-04-05 22:19:37,606 - INFO - CCIP messageId (pre-send): 61b2ed1940e2327ba052b61b5a8d566168d2d1f53fb453d8cad767b9763de9a7
+2025-04-05 22:19:39,032 - INFO - CCIP Transfer submitted (Type 2): e58d90682e81a1c224f8349d6ed1eda70f27af5bb6fd8cbca473623e67914f59 | View: https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0xe58d90682e81a1c224f8349d6ed1eda70f27af5bb6fd8cbca473623e67914f59
+2025-04-05 22:19:39,032 - INFO - CCIP Transfer Submitted: e58d90682e81a1c224f8349d6ed1eda70f27af5bb6fd8cbca473623e67914f59, Message ID: 61b2ed1940e2327ba052b61b5a8d566168d2d1f53fb453d8cad767b9763de9a7

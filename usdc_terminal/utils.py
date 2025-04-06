@@ -255,7 +255,8 @@ def approve_token_if_needed(token_address,
 
     return receipt.status == 1
 
-def estimate_dynamic_gas(router, dest_selector, message, account, buffer=1.2, default_gas=300_000, max_gas=1_200_000):
+def estimate_dynamic_gas(chain_name,
+                        buffer=1.2, default_gas=300_000, max_gas=1_200_000):
     """
     Dynamically estimate gas limit for CCIP transfer.
     
@@ -270,17 +271,20 @@ def estimate_dynamic_gas(router, dest_selector, message, account, buffer=1.2, de
     Returns:
         int: Final gas limit.
     """
-    try:
-        estimated = router.functions.ccipSend(dest_selector, message).estimate_gas({'from': account})
-        gas_limit = int(estimated * buffer)
-        if gas_limit > max_gas:
-            logger.warning(f"⚠️ Gas limit estimate ({gas_limit}) exceeds max cap ({max_gas}). Using cap.")
-            gas_limit = max_gas
-        logger.info(f"✅ Estimated Gas: {estimated}, with buffer: {gas_limit}")
-        return gas_limit
-    except Exception as e:
-        logger.warning(f"⚠️ Gas estimation failed, fallback used. Reason: {e}")
-        return int(default_gas * buffer)
+
+    fallback = GAS_LIMITS_BY_CHAIN.get(chain_name.lower(), default_gas)
+    gas_limit = int(fallback * buffer)
+    # try:
+    #     estimated = router.functions.ccipSend(dest_selector, message).estimate_gas({'from': account})
+    #     gas_limit = int(estimated * buffer)
+    #     if gas_limit > max_gas:
+    #         logger.warning(f"⚠️ Gas limit estimate ({gas_limit}) exceeds max cap ({max_gas}). Using cap.")
+    #         gas_limit = max_gas
+    #     logger.info(f"✅ Estimated Gas: {estimated}, with buffer: {gas_limit}")
+    #     return gas_limit
+    # except Exception as e:
+    #     logger.warning(f"⚠️ Gas estimation failed, fallback used. Reason: {e}")
+    return int(gas_limit)
 
 # def estimate_dynamic_gas(
 #     router,

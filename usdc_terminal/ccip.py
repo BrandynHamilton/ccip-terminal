@@ -82,7 +82,7 @@ def send_ccip_transfer(to_address, dest_chain, amount,
     print(f'raw_fee: {raw_fee}')
     print(f'fee: {fee}')
 
-    gas_limit = estimate_dynamic_gas(router, dest_selector, message, account.address)
+    gas_limit = estimate_dynamic_gas(source_chain)
 
     latest_block = w3.eth.get_block("latest")
     base_fee = latest_block.get("baseFeePerGas", 0)
