@@ -6,3 +6,11 @@
 2025-04-05 22:19:37,606 - INFO - CCIP messageId (pre-send): 61b2ed1940e2327ba052b61b5a8d566168d2d1f53fb453d8cad767b9763de9a7
 2025-04-05 22:19:39,032 - INFO - CCIP Transfer submitted (Type 2): e58d90682e81a1c224f8349d6ed1eda70f27af5bb6fd8cbca473623e67914f59 | View: https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0xe58d90682e81a1c224f8349d6ed1eda70f27af5bb6fd8cbca473623e67914f59
 2025-04-05 22:19:39,032 - INFO - CCIP Transfer Submitted: e58d90682e81a1c224f8349d6ed1eda70f27af5bb6fd8cbca473623e67914f59, Message ID: 61b2ed1940e2327ba052b61b5a8d566168d2d1f53fb453d8cad767b9763de9a7
+2025-04-05 22:27:28,635 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on base
+2025-04-05 22:27:47,979 - INFO - CCIP messageId (pre-send): 3bac0531313de7d24dcc9c036a431976e896413f2fd81a3586663ba09370ae06
+2025-04-05 22:27:49,356 - WARNING - CCIP Transfer 1f7560c395aa0b6d4b17c91f9c455eaa286abb0a43a0432b0ca5c76459138fc4 was mined but failed (status=0). Investigate. | View: https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0x1f7560c395aa0b6d4b17c91f9c455eaa286abb0a43a0432b0ca5c76459138fc4
+2025-04-05 22:27:49,357 - INFO - CCIP Transfer Submitted: 1f7560c395aa0b6d4b17c91f9c455eaa286abb0a43a0432b0ca5c76459138fc4, Message ID: 3bac0531313de7d24dcc9c036a431976e896413f2fd81a3586663ba09370ae06
+2025-04-05 22:29:12,701 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on base
+2025-04-05 22:29:28,671 - INFO - CCIP messageId (pre-send): 3bac0531313de7d24dcc9c036a431976e896413f2fd81a3586663ba09370ae06
+2025-04-05 22:29:30,240 - INFO - CCIP Transfer submitted (Type 2): ba860fa6f47d901f6d46d444a1f809800031fad4b62594458e9388eaafb8724e | View: https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0xba860fa6f47d901f6d46d444a1f809800031fad4b62594458e9388eaafb8724e
+2025-04-05 22:29:30,240 - INFO - CCIP Transfer Submitted: ba860fa6f47d901f6d46d444a1f809800031fad4b62594458e9388eaafb8724e, Message ID: 3bac0531313de7d24dcc9c036a431976e896413f2fd81a3586663ba09370ae06

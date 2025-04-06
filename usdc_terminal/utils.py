@@ -273,6 +273,7 @@ def estimate_dynamic_gas(chain_name,
     """
 
     fallback = GAS_LIMITS_BY_CHAIN.get(chain_name.lower(), default_gas)
+    fallback = max(default_gas,fallback)
     gas_limit = int(fallback * buffer)
     # try:
     #     estimated = router.functions.ccipSend(dest_selector, message).estimate_gas({'from': account})
