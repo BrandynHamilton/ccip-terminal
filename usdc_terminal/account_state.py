@@ -5,11 +5,13 @@ from usdc_terminal.accounts import load_accounts, network_func
 from usdc_terminal.token_utils import get_balance
 import json
 
-def get_all_balances(TOKEN_CONTRACTS, TOKEN_DECIMALS):
+def get_all_balances(TOKEN_CONTRACTS, TOKEN_DECIMALS,account_index=None):
     BALANCE_DICT = {}
 
-    for account_obj in load_accounts():
-        account = account_obj["account"]
+    account_obj = load_accounts(account_index=account_index)
+
+    for obj in account_obj:
+        account = obj["account"]
         address = account.address
 
         BALANCE_DICT[address] = {}
@@ -45,14 +47,26 @@ def get_all_balances(TOKEN_CONTRACTS, TOKEN_DECIMALS):
                 }
 
     print(json.dumps(BALANCE_DICT, indent=2))
-    return BALANCE_DICT
+    return BALANCE_DICT, account_obj
 
-def get_usdc_data():
-
+def get_usdc_data(account_index=None):
     usdc_data = token_data()
+    usdc_price = (
+        usdc_data.get('market_data', {})
+        .get('current_price', {})
+        .get('usd', 1)
+    )
+
     TOKEN_DECIMALS = extract_token_decimals(usdc_data)
     TOKEN_CONTRACTS = extract_token_contracts(usdc_data)
-    BALANCES_DICT = get_all_balances(TOKEN_CONTRACTS,TOKEN_DECIMALS)
+
+    BALANCES_DICT, account_obj = get_all_balances(
+        TOKEN_CONTRACTS,
+        TOKEN_DECIMALS,
+        account_index=account_index
+    )
+
     TOKEN_CONTRACTS = to_checksum_dict(TOKEN_CONTRACTS)
 
-    return BALANCES_DICT, TOKEN_CONTRACTS, TOKEN_DECIMALS
+    return BALANCES_DICT, TOKEN_CONTRACTS, TOKEN_DECIMALS, account_obj, usdc_price
+

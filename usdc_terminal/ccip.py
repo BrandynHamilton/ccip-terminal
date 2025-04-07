@@ -5,7 +5,8 @@ import requests
 from eth_account import Account
 from eth_abi import encode
 from eth_utils import keccak, to_checksum_address
-from usdc_terminal.utils import load_abi, logger, approve_token_if_needed, check_ccip_lane, estimate_dynamic_gas
+from usdc_terminal.utils import (load_abi, logger, approve_token_if_needed, check_ccip_lane, 
+                                 estimate_dynamic_gas, calculate_usd_values,get_largest_balance)
 from usdc_terminal.accounts import load_accounts
 from usdc_terminal.env import ETHERSCAN_API_KEY
 from usdc_terminal.account_state import get_usdc_data
@@ -39,13 +40,47 @@ def build_ccip_message(receiver, token_address, amount, token_decimals,
     }
     return message
 
+def get_account_info(account_index=None,min_gas_threshold=0):
+    BALANCES_DICT_RAW, TOKEN_CONTRACTS, TOKEN_DECIMALS, account_obj, usdc_price = get_usdc_data(account_index=account_index)
+    print(f'BALANCES_DICT_RAW: {BALANCES_DICT_RAW}')
+    BALANCES_DICT = calculate_usd_values(BALANCES_DICT_RAW,usdc_price)
+    print(f'BALANCES_DICT: {BALANCES_DICT}')
+
+    largest_balance_dict = get_largest_balance(BALANCES_DICT_RAW, account_obj=account_obj,min_gas_threshold=min_gas_threshold)
+
+    print(f'largest_balance_dict: {largest_balance_dict}')
+
+    BALANCES_DICT['largest_balance_dict'] = largest_balance_dict or {}
+
+    return BALANCES_DICT
+
 def send_ccip_transfer(to_address, dest_chain, amount,
-                       source_chain='arbitrum', account_index=0, tx_type=2):
+                       source_chain=None, account_index=None, tx_type=2):
     # === Setup ===
-    BALANCES_DICT, TOKEN_CONTRACTS, TOKEN_DECIMALS = get_usdc_data()
-    account_obj = load_accounts(source_chain)[account_index]
-    w3 = account_obj["w3"]
+    BALANCES_DICT_RAW, TOKEN_CONTRACTS, TOKEN_DECIMALS, account_obj, usdc_price = get_usdc_data(account_index=account_index)
+
+    print(f'BALANCES_DICT:{BALANCES_DICT_RAW},usdc_price: {usdc_price}')
+
+    if account_index is None or source_chain is None:
+        largest_balance_dict = get_largest_balance(BALANCES_DICT_RAW, account_obj, min_gas_threshold=0.001,exclude_chain=dest_chain)
+        if account_index is None:
+            account_index = largest_balance_dict['account_index']
+        if source_chain is None:
+            source_chain = largest_balance_dict['max_network']
+    
+    print(f'account_obj: {account_obj}')
+
+    account_data = load_accounts(source_chain,account_index)
+
+    account_obj = account_data[0]
+
+    print(f'account: {account_obj}')
+
+    # import pdb; pdb.set_trace()
+
     account = account_obj["account"]
+    w3 = account_obj["w3"]
+
     router_address = resolve_router_address(source_chain)
     router = w3.eth.contract(address=router_address, abi=ROUTER_ABI)
     token_address = TOKEN_CONTRACTS[source_chain]
@@ -53,7 +88,12 @@ def send_ccip_transfer(to_address, dest_chain, amount,
 
     # === Check balance of token ===
     erc20 = w3.eth.contract(address=Web3.to_checksum_address(token_address), abi=abis["erc20_abi"])
-    token_balance = erc20.functions.balanceOf(account.address).call()
+    print(f'account.address: {account.address}')
+    # import pdb; pdb.set_trace()
+
+    account_address_checksum = Web3.to_checksum_address(account.address)
+
+    token_balance = erc20.functions.balanceOf(account_address_checksum).call()
     required_amount = int(amount * (10 ** token_decimals))
     print(f'token_balance: {token_balance}')
     print(f'required_amount: {required_amount}')
@@ -144,8 +184,14 @@ def send_ccip_transfer(to_address, dest_chain, amount,
     except Exception as e:
         if tx_type == 2:
             logger.info(f"EIP-1559 Transaction Failed: {e}. Retrying with Legacy Type 0...")
-            return send_ccip_transfer(TOKEN_CONTRACTS, TOKEN_DECIMALS, to_address, dest_chain, amount,
-                                      source_chain, account_index, tx_type=0)
+            return send_ccip_transfer(
+                to_address=to_address,
+                dest_chain=dest_chain,
+                amount=amount,
+                source_chain=source_chain,
+                account_index=account_index,
+                tx_type=0
+            )
         else:
             logger.info(f"Legacy Transaction Failed: {e}")
             raise
@@ -225,7 +271,7 @@ def check_ccip_message_status(message_id_hex, dest_chain, wait=False, poll_inter
 
 def get_ccip_fee_api(to_address,source_chain,dest_chain,amount,account_index=0,tx_type=2):
 
-    account_obj = load_accounts(source_chain)[account_index]
+    account_obj = load_accounts(source_chain,account_index)
     w3 = account_obj["w3"]
     account = account_obj["account"]
     router_address = resolve_router_address(source_chain)

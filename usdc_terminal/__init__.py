@@ -1,4 +1,4 @@
-from .utils import (get_token_decimals,convert_to_usd,
+from .utils import (get_token_decimals,
                     resolve_chain_name,approve_token_if_needed,
                     extract_token_decimals,extract_token_contracts,
                     to_checksum_dict,deep_checksum,load_abi)

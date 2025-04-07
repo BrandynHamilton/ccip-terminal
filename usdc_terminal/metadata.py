@@ -78,12 +78,12 @@ FALLBACK_GAS_TOKENS = {
 }
 
 GAS_LIMITS_BY_CHAIN = {
-    'ethereum': 500_000, 
-    'arbitrum': 200_000,
-    'optimism': 200_000,
-    'base': 200_000,
-    'polygon': 250_000,
-    'avalanche': 300_000,
+    'ethereum': 600_000, 
+    'arbitrum': 350_000,
+    'optimism': 350_000,
+    'base': 300_000,
+    'polygon': 400_000,
+    'avalanche': 400_000,
 }
 
 FEE_TOKEN_ADDRESS = "0x0000000000000000000000000000000000000000"

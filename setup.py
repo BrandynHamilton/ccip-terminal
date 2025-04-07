@@ -11,7 +11,8 @@ setup(
         "requests",
         "python-dotenv",
         "click",
-        "twilio"
+        "twilio",
+        "cachetools"
     ],
     extras_require={
         "fiat-ramps": ["flask", "requests"],

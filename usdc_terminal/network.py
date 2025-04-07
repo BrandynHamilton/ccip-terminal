@@ -50,7 +50,7 @@ def network_func(chain='ethereum', type='mainnet'):
         if w3.is_connected():
             try:
                 latest_block = w3.eth.get_block('latest')['number']
-                print(f"✅ Connected to {chain} via {gateway}: Block {latest_block}")
+                # print(f"✅ Connected to {chain} via {gateway}: Block {latest_block}")
                 return w3
             except Exception as e:
                 print(f"⚠️ Connected but failed to fetch block. Error: {e}")

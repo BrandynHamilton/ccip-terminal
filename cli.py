@@ -3,7 +3,7 @@ import json
 import click
 
 from usdc_terminal.core import batch_transfer
-from usdc_terminal.ccip import send_ccip_transfer
+from usdc_terminal.ccip import send_ccip_transfer, get_account_info
 from usdc_terminal.notifications import send_email_notification, send_sms_notification
 from usdc_terminal.logger import logger
 from fiat_ramps import create_transak_session, run_webhook_server
@@ -34,23 +34,49 @@ def cli():
     """USDC Transfer CLI"""
     pass
 
+# UTILITY COMMAND 
+@cli.command()
+@click.option('--network', default='ethereum', help='Blockchain network to use.')
+def show_accounts(network):
+    """Display all available wallet addresses and their indexes."""
+    from usdc_terminal.accounts import load_accounts
+
+    accounts = load_accounts(network=network)
+    for idx, obj in enumerate(accounts):
+        print(f"[{idx}] {obj['account'].address}")
+
+# ACCOUNT INFO COMMAND
+@cli.command()
+@click.option('--account_index', default=None, type=int)
+@click.option('--min-gas-threshold', default=0)
+def get_account_status(account_index, min_gas_threshold):
+    account_info = get_account_info(account_index,min_gas_threshold)
+    logger.info(f'Account Data: {account_info}')
+    logger.info(f"Largest Balance Info: {account_info['largest_balance_dict']}")
+
 # 🚀 TRANSFER COMMAND
 @cli.command()
 @click.option('--to', help='Destination wallet address.')
 @click.option('--dest', help='Destination chain.')
 @click.option('--amount', type=float, help='Amount to send.')
-@click.option('--source', default='arbitrum', help='Source chain.')
+@click.option('--source', default=None, type=str, help='Source chain.')
 @click.option('--batch-file', type=click.Path(), help='Path to batch JSON or CSV file.')
-@click.option('--account-index', default=0, help='Account index to use.')
+@click.option('--account-index', default=None, type=int, help='Account index to use.')
+@click.option('--track-messages', is_flag=True, default=True, help='Track message status after transfer.')
+@click.option('--wait-status', is_flag=True, default=True, help='Wait until message is finalized on OffRamp.')
 @click.option('--notify-email', default=None, help='Email to notify.')
 @click.option('--notify-sms', default=None, help='Phone number to notify.')
-def transfer(to, dest, amount, source, batch_file, account_index, notify_email, notify_sms):
+@click.option('--min-gas-threshold', default=0.001)
+def transfer(to, dest, amount, source, batch_file, account_index, track_messages, wait_status, notify_email, notify_sms,min_gas_threshold):
     """Send CCIP transfer (single or batch)."""
+    from usdc_terminal.ccip import check_ccip_message_status
+
     tx_hash = None
 
     if batch_file:
         logger.info(f"Running batch transfer from file: {batch_file}")
-        batch_transfer(batch_file, account_index)
+        batch_transfer(batch_file, source_network=source, account_index=account_index, min_gas_threshold=min_gas_threshold, 
+                       track_messages=track_messages, wait_for_status=wait_status)
     else:
         if not all([to, dest, amount]):
             raise click.UsageError("Provide --to, --dest, and --amount for single transfer.")
@@ -59,6 +85,18 @@ def transfer(to, dest, amount, source, batch_file, account_index, notify_email, 
         receipt, message_id = send_ccip_transfer(to_address=to, dest_chain=dest, amount=amount, 
                                     source_chain=source, account_index=account_index)
         logger.info(f"CCIP Transfer Submitted: {receipt.transactionHash.hex()}, Message ID: {message_id}")
+
+        if track_messages:
+            status, address = check_ccip_message_status(
+            message_id_hex=message_id,
+            dest_chain=dest,
+            wait=wait_status,
+        )
+
+        if status == "NOT_FOUND":
+            print(f"❌ Message {message_id} not found.")
+        else:
+            print(f"✅ Status: {status} | OffRamp: {address}")
 
         if notify_email:
             send_email_notification("CCIP Transfer Complete", f"Your transfer to {dest} was submitted. Tx: {tx_hash}", notify_email)

@@ -4,7 +4,6 @@ from eth_account import Account
 from eth_account.signers.local import LocalAccount
 from web3 import Web3, EthereumTesterProvider
 from web3.exceptions import TransactionNotFound,TimeExhausted
-from web3.middleware import ExtraDataToPOAMiddleware
 
 import math
 import pandas as pd 
@@ -76,8 +75,6 @@ def clear_logs():
         pass
     logger.info("🧹 Logs cleared.")
 
-
-
 def get_token_decimals(TOKEN_CONTRACTS,w3):
         
         """Fetch decimals for each token contract using Web3."""
@@ -115,30 +112,91 @@ def get_token_decimals(TOKEN_CONTRACTS,w3):
             print(f"Error: {e}")
             return None
 
+# def convert_to_usd(balances, prices,TOKEN_CONTRACTS):
+#     """
+#     Convert token balances to their USD equivalent using token prices.
 
+#     Parameters:
+#     - balances (dict): Dictionary of token balances.
+#     - prices (dict): Dictionary of token prices.
 
-def convert_to_usd(balances, prices,TOKEN_CONTRACTS):
-    """
-    Convert token balances to their USD equivalent using token prices.
+#     Returns:
+#     - dict: Dictionary of token balances converted to USD.
+#     """
+#     # Convert token keys to upper case for consistency
+#     for token in TOKEN_CONTRACTS.keys():
+#         if f"{token}" not in prices:
+#             print(f"Missing price for token: {token}")
 
-    Parameters:
-    - balances (dict): Dictionary of token balances.
-    - prices (dict): Dictionary of token prices.
+#     usd_balances = {
+#         token: balances[token] * prices[f"{token}"]
+#         for token in TOKEN_CONTRACTS.keys()
+#         if f"{token}" in prices
+#     }
+#     return usd_balances
 
-    Returns:
-    - dict: Dictionary of token balances converted to USD.
-    """
-    # Convert token keys to upper case for consistency
-    for token in TOKEN_CONTRACTS.keys():
-        if f"{token}" not in prices:
-            print(f"Missing price for token: {token}")
+def calculate_usd_values(BALANCES_DICT, usdc_price):
 
-    usd_balances = {
-        token: balances[token] * prices[f"{token}"]
-        for token in TOKEN_CONTRACTS.keys()
-        if f"{token}" in prices
+    # Add USD values to each balance entry
+    for address, data in BALANCES_DICT.items():
+        for network, balance_data in data.items():
+            balance_data['usd_balance'] = round(balance_data['usdc'] * usdc_price, 6)
+
+    # Initialize totals
+    total_by_network = {}
+    grand_total = 0.0
+
+    # Aggregate totals
+    for address, data in BALANCES_DICT.items():
+        for network, balance_data in data.items():
+            usd = balance_data.get('usd_balance', 0.0)
+            total_by_network[network] = total_by_network.get(network, 0.0) + usd
+            grand_total += usd
+
+    # Round totals for readability
+    total_by_network = {k: round(v, 2) for k, v in total_by_network.items()}
+    grand_total = round(grand_total, 2)
+
+    # Store in BALANCES_DICT
+    BALANCES_DICT['TOTAL USD VALUE'] = {
+        'by_network': total_by_network,
+        'total_usd': grand_total
     }
-    return usd_balances
+
+    return BALANCES_DICT
+
+def get_largest_balance(BALANCES_DICT, account_obj=None, min_gas_threshold=0.001, exclude_chain=None):
+    max_wallet = None
+    max_network = None
+    max_usdc_balance = 0.0
+    account_index = None
+
+    for wallet_idx, (wallet, networks) in enumerate(BALANCES_DICT.items()):
+        for network, balances in networks.items():
+            if network == exclude_chain:
+                continue  # Skip destination chain
+            if isinstance(balances, dict) and balances.get("native_token", 0) >= min_gas_threshold:
+
+                usdc_balance = balances.get('usdc', 0)
+                native_balance = balances.get('native_token', 0)
+                if usdc_balance > max_usdc_balance and native_balance >= min_gas_threshold:
+                    max_usdc_balance = usdc_balance
+                    max_wallet = wallet
+                    max_network = network
+                    account_index = wallet_idx if account_obj else None
+
+    if max_wallet:
+        print(f"Wallet with highest USDC balance (gas OK, excluding '{exclude_chain}'): {max_wallet}")
+        print(f"Network: {max_network} | USDC: {max_usdc_balance}")
+    else:
+        print("⚠️ No wallet met the gas threshold or destination exclusion.")
+
+    return {
+        'max_wallet': max_wallet,
+        'max_network': max_network,
+        'max_usdc_balance': max_usdc_balance,
+        'account_index': account_index
+    }
 
 def extract_token_decimals(token_data):
     token_decimals = {}
