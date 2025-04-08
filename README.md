@@ -1,7 +1,8 @@
 # `ccip-terminal` Documentation
 
-**ccip-terminal** is a Python package and CLI for managing cross-chain token transfers using Chainlink CCIP.  
-It can be thought as a self-custodial bridge; it supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitoring, and address book utilities.
+**ccip-terminal** is a Python package and CLI for managing cross-chain token transfers using Chainlink CCIP.
+
+The package can be thought as a self-custodial bridge; it supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitoring, and address book utilities.
 
 For now the package **only supports USDC**; other currencies will be added later.
 
