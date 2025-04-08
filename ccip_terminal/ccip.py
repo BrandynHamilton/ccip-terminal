@@ -5,12 +5,12 @@ import requests
 from eth_account import Account
 from eth_abi import encode
 from eth_utils import keccak, to_checksum_address
-from usdc_terminal.utils import (load_abi, logger, approve_token_if_needed, check_ccip_lane, 
+from ccip_terminal.utils import (load_abi, logger, approve_token_if_needed, check_ccip_lane, 
                                  estimate_dynamic_gas, calculate_usd_values,get_largest_balance)
-from usdc_terminal.accounts import load_accounts
-from usdc_terminal.env import ETHERSCAN_API_KEY
-from usdc_terminal.account_state import get_usdc_data
-from usdc_terminal.metadata import (CHAIN_MAP, FEE_TOKEN_ADDRESS, 
+from ccip_terminal.accounts import load_accounts
+from ccip_terminal.env import ETHERSCAN_API_KEY
+from ccip_terminal.account_state import get_usdc_data
+from ccip_terminal.metadata import (CHAIN_MAP, FEE_TOKEN_ADDRESS, 
                                     CHAIN_SELECTORS, ROUTER_MAP)
 
 abis = load_abi()
@@ -174,7 +174,8 @@ def send_ccip_transfer(to_address, dest_chain, amount,
         tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
-        url = f'https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0x{tx_hash.hex()}'
+        # url = f'https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0x{tx_hash.hex()}'
+        url = f'https://ccip.chain.link/#/side-drawer/msg/0x{tx_hash.hex()}'
         if receipt.status == 1:
             logger.info(f"CCIP Transfer submitted (Type {tx_type}): {tx_hash.hex()} | View: {url}")
         else:

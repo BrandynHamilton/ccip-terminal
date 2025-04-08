@@ -2,10 +2,10 @@ import os
 import json
 import click
 
-from usdc_terminal.core import batch_transfer
-from usdc_terminal.ccip import send_ccip_transfer, get_account_info
-from usdc_terminal.notifications import send_email_notification, send_sms_notification
-from usdc_terminal.logger import logger
+from ccip_terminal.core import batch_transfer
+from ccip_terminal.ccip import send_ccip_transfer, get_account_info
+from ccip_terminal.notifications import send_email_notification, send_sms_notification
+from ccip_terminal.logger import logger
 from fiat_ramps import create_transak_session, run_webhook_server
 from scheduler import schedule_ccip_transfer, start_scheduler_server
 
@@ -17,7 +17,7 @@ if sys.stdout.encoding.lower() != 'utf-8':
         import codecs
         sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer)
 
-ADDRESS_BOOK_FILE = "address_book.json"
+ADDRESS_BOOK_FILE = "data/address_book.json"
 
 def load_address_book():
     if not os.path.exists(ADDRESS_BOOK_FILE):
@@ -39,7 +39,7 @@ def cli():
 @click.option('--network', default='ethereum', help='Blockchain network to use.')
 def show_accounts(network):
     """Display all available wallet addresses and their indexes."""
-    from usdc_terminal.accounts import load_accounts
+    from ccip_terminal.accounts import load_accounts
 
     accounts = load_accounts(network=network)
     for idx, obj in enumerate(accounts):
@@ -69,7 +69,7 @@ def get_account_status(account_index, min_gas_threshold):
 @click.option('--min-gas-threshold', default=0.001)
 def transfer(to, dest, amount, source, batch_file, account_index, track_messages, wait_status, notify_email, notify_sms,min_gas_threshold):
     """Send CCIP transfer (single or batch)."""
-    from usdc_terminal.ccip import check_ccip_message_status
+    from ccip_terminal.ccip import check_ccip_message_status
 
     tx_hash = None
 
@@ -112,7 +112,7 @@ def transfer(to, dest, amount, source, batch_file, account_index, track_messages
 @click.option('--interval', default=120, help='Polling interval in seconds.')
 def ccip_status(message_id, dest_chain, wait, timeout,interval,max_retries=120):
     """Check the status of a CCIP message."""
-    from usdc_terminal.ccip import check_ccip_message_status
+    from ccip_terminal.ccip import check_ccip_message_status
 
     max_retries = timeout // interval if wait else 1
 

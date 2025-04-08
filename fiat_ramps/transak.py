@@ -2,8 +2,8 @@
 
 import requests
 from .config import TRANSAK_API_KEY, REDIRECT_URL
-from usdc_terminal.metadata import FALLBACK_GAS_TOKENS
-from usdc_terminal.decorators import ttl_cache
+from ccip_terminal.metadata import FALLBACK_GAS_TOKENS
+from ccip_terminal.decorators import ttl_cache
 
 @ttl_cache(ttl=86400)  # Cache per wallet validation for 24 hours
 def verify_address(wallet_address,crypto_currency_code='USDC',network="ethereum"):

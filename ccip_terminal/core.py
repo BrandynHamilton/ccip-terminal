@@ -5,18 +5,18 @@ from pathlib import Path
 import json
 import time
 
-from usdc_terminal.logger import logger
-from usdc_terminal.token_utils import get_balance
-from usdc_terminal.accounts import load_accounts
-from usdc_terminal.network import network_func
-from usdc_terminal.ccip import send_ccip_transfer, get_ccip_fee_api, check_ccip_message_status
-from usdc_terminal.notifications import send_email_notification, send_sms_notification
-from usdc_terminal.account_state import get_usdc_data
-from usdc_terminal.utils import calculate_usd_values
+from ccip_terminal.logger import logger
+from ccip_terminal.token_utils import get_balance
+from ccip_terminal.accounts import load_accounts
+from ccip_terminal.network import network_func
+from ccip_terminal.ccip import send_ccip_transfer, get_ccip_fee_api, check_ccip_message_status
+from ccip_terminal.notifications import send_email_notification, send_sms_notification
+from ccip_terminal.account_state import get_usdc_data
+from ccip_terminal.utils import calculate_usd_values
 
 
 def track_ccip_messages(tracked_messages, wait_for_status=False, poll_interval=120, max_retries=15):
-    from usdc_terminal.ccip import check_ccip_message_status
+    from ccip_terminal.ccip import check_ccip_message_status
 
     attempts = 0
     pending = tracked_messages.copy()

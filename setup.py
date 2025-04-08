@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="usdc-terminal",  # Name of your package
+    name="ccip-terminal",  # Name of your package
     version="0.1.0",  # Initial version
     packages=find_packages(),
     install_requires=[
@@ -12,7 +12,8 @@ setup(
         "python-dotenv",
         "click",
         "twilio",
-        "cachetools"
+        "cachetools",
+        "cryptography"
     ],
     extras_require={
         "fiat-ramps": ["flask", "requests"],
@@ -21,12 +22,12 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "usdc-terminal=cli:cli"
+            "ccip-terminal=cli:cli"
         ]
     },
     author="Brandyn Hamilton",
     author_email="brandynham1120@gmail.com",
-    description="Simple Cross-Chain USDC Transfers Powered by CCIP",
+    description="Simple Cross-Chain Token Transfers Powered by CCIP",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url=" ",  # optional

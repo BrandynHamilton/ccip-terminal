@@ -1,6 +1,6 @@
-# usdc_terminal/decorators.py
+# ccip_terminal/decorators.py
 from cachetools import TTLCache, cached
-from usdc_terminal.config import config
+from ccip_terminal.config import config
 from functools import wraps
 
 def get_cache():

@@ -1,8 +1,9 @@
-# usdc_terminal/scheduler/scheduler.py
+# ccip_terminal/scheduler/scheduler.py
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
-from usdc_terminal.core import send_ccip_transfer
+from ccip_terminal.core import send_ccip_transfer
+from ccip_terminal.logger import logger
 from flask import Flask, jsonify
 
 scheduler = BackgroundScheduler()
@@ -14,8 +15,9 @@ def schedule_ccip_transfer(wallet, amount, dest_chain, source_chain, account_ind
     """
     def job():
         print(f"🚀 Scheduled CCIP transfer: {amount} USDC → {dest_chain} → {wallet}")
-        tx_hash = send_ccip_transfer(wallet, dest_chain, amount, source_chain, account_index)
-        print(f"✅ Transfer submitted: {tx_hash}")
+        receipt, message_id = send_ccip_transfer(to_address=wallet, dest_chain=dest_chain, amount=amount, 
+                                    source_chain=source_chain, account_index=account_index)
+        logger.info(f"CCIP Transfer Submitted: {receipt.transactionHash.hex()}, Message ID: {message_id}")
 
     trigger = CronTrigger.from_crontab(cron_expr)
     job_ref = scheduler.add_job(job, trigger)

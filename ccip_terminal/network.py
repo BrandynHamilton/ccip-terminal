@@ -1,8 +1,8 @@
 from web3 import Web3
 from web3.middleware import ExtraDataToPOAMiddleware
 from functools import lru_cache
-from usdc_terminal.metadata import CHAIN_MAP
-from usdc_terminal.env import ALCHEMY_API_KEY, INFURA_API_KEY
+from ccip_terminal.metadata import CHAIN_MAP
+from ccip_terminal.env import ALCHEMY_API_KEY, INFURA_API_KEY
 
 @lru_cache
 def build_chain_lookup():

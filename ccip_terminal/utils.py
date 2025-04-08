@@ -17,11 +17,11 @@ import random
 import time
 import json
 
-from usdc_terminal.config import config
-from usdc_terminal.metadata import CHAIN_MAP, ROUTER_MAP, MAX_UINT256, GAS_LIMITS_BY_CHAIN
-from usdc_terminal.env import (ALCHEMY_API_KEY,INFURA_API_KEY)
-from usdc_terminal.logger import logger
-from usdc_terminal.network import resolve_chain_name
+from ccip_terminal.config import config
+from ccip_terminal.metadata import CHAIN_MAP, ROUTER_MAP, MAX_UINT256, GAS_LIMITS_BY_CHAIN
+from ccip_terminal.env import (ALCHEMY_API_KEY,INFURA_API_KEY)
+from ccip_terminal.logger import logger
+from ccip_terminal.network import resolve_chain_name
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ABI_DIR = os.path.join(BASE_DIR, 'abi')

@@ -1,8 +1,8 @@
-from usdc_terminal.utils import (extract_token_decimals,extract_token_contracts,
+from ccip_terminal.utils import (extract_token_decimals,extract_token_contracts,
                                 to_checksum_dict)
-from usdc_terminal.apis import token_data
-from usdc_terminal.accounts import load_accounts, network_func
-from usdc_terminal.token_utils import get_balance
+from ccip_terminal.apis import token_data
+from ccip_terminal.accounts import load_accounts, network_func
+from ccip_terminal.token_utils import get_balance
 import json
 
 def get_all_balances(TOKEN_CONTRACTS, TOKEN_DECIMALS,account_index=None):

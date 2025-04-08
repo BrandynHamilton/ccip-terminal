@@ -1,6 +1,6 @@
 import os
 from web3 import Web3
-from usdc_terminal.network import network_func
+from ccip_terminal.network import network_func
 
 def load_accounts(network='ethereum', account_index=None):
     private_keys = os.getenv("PRIVATE_KEYS", "").split(",")
