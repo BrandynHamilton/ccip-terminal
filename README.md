@@ -1,6 +1,6 @@
-# `usdc-transfer` Documentation
+# `ccip-transfer` Documentation
 
-**usdc-transfer** is a Python package and CLI for managing cross-chain USDC transfers using Chainlink CCIP.  
+**ccip-transfer** is a Python package and CLI for managing cross-chain USDC transfers using Chainlink CCIP.  
 It can be thought as a self-custodial bridge; it supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitoring, and address book utilities.
 
 ## Installation
@@ -8,10 +8,10 @@ It can be thought as a self-custodial bridge; it supports batch transfers, fiat 
 ```bash
 pip install -e .[all]
 
-pip install usdc-transfer
-pip install usdc-transfer[fiat-ramps]
-pip install usdc-transfer[scheduler]
-pip install usdc-transfer[all]
+pip install ccip-transfer
+pip install ccip-transfer[fiat-ramps]
+pip install ccip-transfer[scheduler]
+pip install ccip-transfer[all]
 
 ```
 
@@ -146,9 +146,9 @@ python cli.py address remove --name Alice
 ## Project Structure
 
 ```
-usdc-transfer/
+ccip-transfer/
 ├── cli.py
-├── usdc_transfer/
+├── ccip_transfer/
 │   ├── core.py
 │   ├── ccip.py
 │   ├── logger.py
