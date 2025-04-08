@@ -1,6 +1,6 @@
-# `ccip-transfer` Documentation
+# `ccip-terminal` Documentation
 
-**ccip-transfer** is a Python package and CLI for managing cross-chain token transfers using Chainlink CCIP.  
+**ccip-terminal** is a Python package and CLI for managing cross-chain token transfers using Chainlink CCIP.  
 It can be thought as a self-custodial bridge; it supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitoring, and address book utilities.
 For now the package **only supports USDC**; other currencies will be added later.
 
@@ -9,10 +9,10 @@ For now the package **only supports USDC**; other currencies will be added later
 ```bash
 pip install -e .[all]
 
-pip install ccip-transfer
-pip install ccip-transfer[fiat-ramps]
-pip install ccip-transfer[scheduler]
-pip install ccip-transfer[all]
+pip install ccip-terminal
+pip install ccip-terminal[fiat-ramps]
+pip install ccip-terminal[scheduler]
+pip install ccip-terminal[all]
 
 ```
 
@@ -147,9 +147,9 @@ python cli.py address remove --name Alice
 ## Project Structure
 
 ```
-ccip-transfer/
+ccip_terminal/
 ├── cli.py
-├── ccip_transfer/
+├── ccip_terminal/
 │   ├── core.py
 │   ├── ccip.py
 │   ├── logger.py
@@ -186,6 +186,7 @@ SMTP_PASSWORD=
 TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TWILIO_PHONE_NUMBER=
+TRANSAK_API_KEY=
 ```
 
 ## INFURA_API_KEY is the only required variable.
