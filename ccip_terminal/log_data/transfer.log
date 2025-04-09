@@ -126,3 +126,4 @@
 2025-04-08 19:51:20,337 - INFO - CCIP messageId (pre-send): a38bb1ab664b76cda4c67c23f8cba5ab75196d90711f2646399afe78568d3bc8
 2025-04-08 19:51:22,422 - WARNING - TX 246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173 mined but failed. Check: https://optimism.blockscout.com/tx/0x246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173
 2025-04-08 19:51:23,180 - INFO - CCIP Transfer Submitted: 246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173, Message ID: a38bb1ab664b76cda4c67c23f8cba5ab75196d90711f2646399afe78568d3bc8
+2025-04-08 20:54:38,095 - INFO - Keystore saved to wallet_keystore.json

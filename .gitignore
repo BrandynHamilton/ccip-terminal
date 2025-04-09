@@ -1,3 +1,5 @@
 *.env
 *.egg-info/
+/fiat_ramps
 /ccip_terminal_env
+wallet_keystore.json

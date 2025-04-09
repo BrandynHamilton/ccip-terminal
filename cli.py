@@ -1,11 +1,14 @@
 import os
 import json
 import click
+from getpass import getpass
+from cryptography.fernet import Fernet
 
 from ccip_terminal.core import batch_transfer
 from ccip_terminal.ccip import send_ccip_transfer, get_account_info, get_ccip_fee_estimate, check_ccip_message_status
 from ccip_terminal.notifications import send_email_notification
 from ccip_terminal.logger import logger
+from ccip_terminal.wallet import generate_wallet, save_to_env, encrypt_keystore
 
 from fiat_ramps import create_transak_session, run_webhook_server
 from scheduler import schedule_ccip_transfer, start_scheduler_server
@@ -177,6 +180,25 @@ def schedule_transfer(to, amount, dest, source, account_index, cron):
     """Schedule a CCIP transfer."""
     schedule_ccip_transfer(to, amount, dest, source, account_index, cron)
     start_scheduler_server()
+
+@cli.command()
+@click.option('--insecure-save', is_flag=True, help="Save private key to .env file (Not recommended).")
+@click.option('--encrypt', is_flag=True, help="Encrypt private key and save to wallet_keystore.json.")
+def create_wallet(insecure_save, encrypt):
+    """Create a new Ethereum wallet."""
+    private_key, address = generate_wallet()
+    click.echo(f"Wallet Address: {address}")
+    click.echo(f"Private Key: {private_key}")
+    click.echo("IMPORTANT: Back up your private key safely.")
+
+    if insecure_save:
+        save_to_env(private_key)
+
+    if encrypt:
+        password = getpass("Enter password for keystore encryption: ")
+        encrypt_keystore(private_key, password)
+
+    click.echo("Wallet setup complete.")
 
 # 📒 ADDRESS BOOK
 @cli.group()
