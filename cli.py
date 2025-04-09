@@ -10,7 +10,6 @@ from ccip_terminal.notifications import send_email_notification
 from ccip_terminal.logger import logger
 from ccip_terminal.wallet import generate_wallet, save_to_env, encrypt_keystore
 
-from fiat_ramps import create_transak_session, run_webhook_server
 from scheduler import schedule_ccip_transfer, start_scheduler_server
 
 import sys
@@ -52,7 +51,7 @@ def show_accounts(network):
 # ACCOUNT INFO COMMAND
 @cli.command()
 @click.option('--account_index', default=None, type=int)
-@click.option('--min-gas-threshold', default=0)
+@click.option('--min-gas-threshold', default=0, type=float)
 def get_account_status(account_index, min_gas_threshold):
     account_info = get_account_info(account_index,min_gas_threshold)
     logger.info(f'Account Data: {json.dumps(account_info, indent=2)}')
@@ -71,7 +70,7 @@ def estimate_gas_cost(to, dest, amount, source, account_index, tx_type, min_gas)
     estimate =  get_ccip_fee_estimate(to, dest, amount,
                           source_chain=source, account_index=account_index, 
                           tx_type=tx_type, min_gas_threshold=min_gas)
-    print(estimate["total_estimate"] / 1e18, "ETH estimated")
+    print(estimate["total_estimate"] / 1e18, "Fee Token (ETH/AVAX/MATIC) estimated")
 
 # 🚀 TRANSFER COMMAND
 @cli.command()
@@ -87,6 +86,13 @@ def estimate_gas_cost(to, dest, amount, source, account_index, tx_type, min_gas)
 @click.option('--estimate', default=None, type=int, help='Enter a fee estimate for your transfer, can leave as none.')
 def transfer(to, dest, amount, source, batch_file, account_index, track_messages, wait_status, notify_email, estimate):
     """Send CCIP transfer (single or batch)."""
+
+    if to:
+        book = load_address_book()
+        if to in book:
+            logger.info(f"Using address book entry for '{to}': {book[to]}")
+            to = book[to]
+
     if batch_file:
         logger.info(f"Running batch transfer from file: {batch_file}")
         batch_transfer(

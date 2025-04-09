@@ -1,0 +1,21 @@
+[
+    {
+      "to_address": "0x3...a92",
+      "amount": 1,
+      "dest": "optimism",
+      "memo": "First test transfer"
+    },
+    {
+      "to_address": "0x3...d81",
+      "amount": 1,
+      "dest": "arbitrum",
+      "memo": "Bonus payment"
+    },
+    {
+      "to_address": "0x3...b97",
+      "amount": 1,
+      "dest": "base",
+      "memo": "Treasury payout"
+    }
+  ]
+  

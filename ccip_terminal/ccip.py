@@ -111,6 +111,7 @@ def send_ccip_transfer(to_address, dest_chain, amount,
         )
 
         tx_hash_hex = receipt.transactionHash.hex()
+        tx_hash_hex = '0x'+tx_hash_hex
 
         explorer_map = {
             "ethereum": f"https://eth.blockscout.com/tx/{tx_hash_hex}",
@@ -202,7 +203,9 @@ def send_ccip_transfer(to_address, dest_chain, amount,
             logger.warning(f"Could not prefetch CCIP messageId: {e}")
 
         tx = router.functions.ccipSend(dest_selector, message).build_transaction(tx_params)
+
         signed_tx = account.sign_transaction(tx)
+        
         tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
@@ -217,7 +220,9 @@ def send_ccip_transfer(to_address, dest_chain, amount,
             except Exception as revert_e:
                 print(f"↪Revert reason: {revert_e}")
 
-        return receipt, links, success, message_id.hex() if message_id else None
+        message_id_hex = '0x'+ message_id.hex()
+
+        return receipt, links, success, message_id_hex if message_id else None
 
     except Exception as e:
         if tx_type == 2:
@@ -253,7 +258,10 @@ def check_ccip_message_status(message_id_hex, dest_chain, wait=False, poll_inter
     if not etherscan_key:
         etherscan_key = ETHERSCAN_API_KEY
 
-    topic2 = '0x' + message_id_hex.lower()
+    if not message_id_hex.startswith("0x"):
+        message_id_hex = "0x" + message_id_hex
+
+    topic2 = message_id_hex.lower()
     event_signature_str = "ExecutionStateChanged(uint64,bytes32,uint8,bytes)"
     topic0 = '0x' + keccak(text=event_signature_str).hex()
 
@@ -320,10 +328,9 @@ def get_ccip_fee_estimate(
     account_index=None,
     tx_type=2,
     min_gas_threshold=0.003,
-    w3=None,
-    account=None
+    account_obj = None
 ):
-    if not w3 or not account:
+    if not account_obj:
         print(f'at estimate getting transfer data')
         transfer_data = prepare_transfer_data(
             dest_chain=dest_chain,
@@ -345,6 +352,7 @@ def get_ccip_fee_estimate(
         from ccip_terminal.metadata import CHAIN_SELECTORS, ROUTER_MAP
         from ccip_terminal.account_state import token_data, extract_token_contracts, extract_token_decimals, to_checksum_dict
         print(f'Getting token data')
+        w3 = account_obj['w3']
         usdc_data = token_data()
         TOKEN_DECIMALS = extract_token_decimals(usdc_data)
         TOKEN_CONTRACTS = to_checksum_dict(extract_token_contracts(usdc_data))

@@ -91,7 +91,10 @@ def prepare_transfer_data(dest_chain, source_chain=None, account_index=None, acc
     else:
         # CLI-style usage
         print(f'no account obj')
-        account_obj_list = load_accounts(network=source_chain,account_index=account_index)
+        if source_chain is not None:
+            account_obj_list = load_accounts(network=source_chain,account_index=account_index)
+        else:
+            account_obj_list = load_accounts(account_index=account_index)
     
     print(f'account_obj_list: {account_obj_list}')
 

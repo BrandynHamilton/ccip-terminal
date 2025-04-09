@@ -142,3 +142,295 @@
 2025-04-08 21:49:27,594 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
 2025-04-08 21:50:04,468 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
 2025-04-08 21:50:08,629 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
+2025-04-09 16:44:20,933 - INFO - CCIP messageId (pre-send): 09c783c887d0856b1a6c1159262e71ed168363e62101b6607525b4b796163272
+2025-04-09 16:44:22,546 - WARNING - TX df5649ab6c07fa72c6cdb994ddc765cd62af623b85a47da002479e40cea83421 mined but failed. Check: https://optimism.blockscout.com/tx/0xdf5649ab6c07fa72c6cdb994ddc765cd62af623b85a47da002479e40cea83421
+2025-04-09 16:46:39,483 - INFO - CCIP messageId (pre-send): 7de75292660c7d64477b35222ad63a7c6985d48d6faab8d6c446d5ede1be6326
+2025-04-09 16:46:40,499 - WARNING - TX a752cc6defb60914dd214be4dfaf66efdba248881187bad88e7e85f2b90f0c1c mined but failed. Check: https://arbitrum.blockscout.com/tx/0xa752cc6defb60914dd214be4dfaf66efdba248881187bad88e7e85f2b90f0c1c
+2025-04-09 16:50:28,129 - INFO - CCIP messageId (pre-send): d549bdf0a76b927d0e8e09470c90cf48bab77ee0693a8f7634b58de09a53772b
+2025-04-09 16:50:30,629 - WARNING - TX 151548625a092a538a2a808e6b0e00b6bbc7ff1f3cbd7ed0f447f052d4c7147e mined but failed. Check: https://optimism.blockscout.com/tx/0x151548625a092a538a2a808e6b0e00b6bbc7ff1f3cbd7ed0f447f052d4c7147e
+2025-04-09 16:54:51,526 - INFO - CCIP messageId (pre-send): 953f817ca84cf3a7d5b8739fcfa6f9300f7165b71cc6d5da49b4ab8f05aebd2e
+2025-04-09 16:54:54,435 - WARNING - TX a3aaabae422f0d96288d90974190d9f1ffb12fd9d141dee147f6c32b5df625ca mined but failed. Check: https://optimism.blockscout.com/tx/0xa3aaabae422f0d96288d90974190d9f1ffb12fd9d141dee147f6c32b5df625ca
+2025-04-09 16:57:13,635 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on optimism
+2025-04-09 16:58:49,464 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
+2025-04-09 16:59:14,702 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on base
+2025-04-09 17:00:42,301 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on base
+2025-04-09 17:02:43,205 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on base
+2025-04-09 17:03:16,723 - INFO - CCIP messageId (pre-send): bd98e85b70900b58b7581405f9ee5343bf6d2ed74cfff70b5f34712f2beb8b8c
+2025-04-09 17:03:17,837 - WARNING - TX 2657e63bbaae1760545d900231bb943c044f51ebc9cd22b91d51265590bb45bf mined but failed. Check: https://arbitrum.blockscout.com/tx/0x2657e63bbaae1760545d900231bb943c044f51ebc9cd22b91d51265590bb45bf
+2025-04-09 17:03:18,398 - INFO - CCIP Transfer Submitted: 2657e63bbaae1760545d900231bb943c044f51ebc9cd22b91d51265590bb45bf, Message ID: bd98e85b70900b58b7581405f9ee5343bf6d2ed74cfff70b5f34712f2beb8b8c
+2025-04-09 17:08:28,828 - INFO - CCIP messageId (pre-send): ec9d7683deae716177aae9111d4dac6e5f7a8106946af93fa00d55b5501a20c8
+2025-04-09 17:08:30,551 - WARNING - TX 83a5855061150eaa31054eacc50a0800c214e75b9460d0af2697078ea7df5869 mined but failed. Check: https://optimism.blockscout.com/tx/0x83a5855061150eaa31054eacc50a0800c214e75b9460d0af2697078ea7df5869
+2025-04-09 17:10:51,670 - INFO - CCIP messageId (pre-send): ec9d7683deae716177aae9111d4dac6e5f7a8106946af93fa00d55b5501a20c8
+2025-04-09 17:10:54,776 - WARNING - TX 6bf9436908699a5db03a7cc4b49e6d646321c1c59b5ec6fc1c23cb23fa9f87f4 mined but failed. Check: https://optimism.blockscout.com/tx/0x6bf9436908699a5db03a7cc4b49e6d646321c1c59b5ec6fc1c23cb23fa9f87f4
+2025-04-09 17:15:59,745 - INFO - CCIP messageId (pre-send): b2adbe89dbe0ad66db4024914fa9754b95f9f37f03a3458010c913434e477e87
+2025-04-09 17:16:02,444 - WARNING - TX a67f6bb909592c04a6260b2f59fae56f220b550e827b03d258f59f81e6a55a29 mined but failed. Check: https://optimism.blockscout.com/tx/0xa67f6bb909592c04a6260b2f59fae56f220b550e827b03d258f59f81e6a55a29
+2025-04-09 17:22:06,343 - INFO - Sending single transfer to 0xB76a85AF68E037d282F69bE60146932D61241d51 on optimism
+2025-04-09 17:22:10,164 - INFO - Detected same-chain transfer on optimism. Executing direct ERC20 transfer.
+2025-04-09 17:22:14,585 - INFO - CCIP Transfer Submitted: 79b35e981ff9f63acf9817ed823f4b6c24fdfd313eb8bce071e2c8f67261ca90, Message ID: None
+2025-04-09 17:29:16,787 - WARNING - Could not prefetch CCIP messageId: 'NoneType' object has no attribute 'hex'
+2025-04-09 17:29:18,444 - WARNING - TX 3aa9d264737211e5ea7a3a0fe1f65977f025b167ee26f4006b8395fcc240751f mined but failed. Check: https://arbitrum.blockscout.com/tx/0x3aa9d264737211e5ea7a3a0fe1f65977f025b167ee26f4006b8395fcc240751f
+2025-04-09 17:31:07,241 - WARNING - Could not prefetch CCIP messageId: 'NoneType' object has no attribute 'hex'
+2025-04-09 17:31:08,813 - INFO - EIP-1559 tx failed: ('execution reverted: ERC20: transfer amount exceeds balance', '0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002645524332303a207472616e7366657220616d6f756e7420657863656564732062616c616e63650000000000000000000000000000000000000000000000000000'). Retrying legacy (Type 0)...
+2025-04-09 17:38:40,463 - WARNING - Could not prefetch CCIP messageId: 'NoneType' object has no attribute 'hex'
+2025-04-09 17:51:38,146 - WARNING - Could not prefetch CCIP messageId: 'NoneType' object has no attribute 'hex'
+2025-04-09 17:51:40,015 - INFO - EIP-1559 tx failed: ('execution reverted: ERC20: transfer amount exceeds balance', '0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002645524332303a207472616e7366657220616d6f756e7420657863656564732062616c616e63650000000000000000000000000000000000000000000000000000'). Retrying legacy (Type 0)...
+2025-04-09 17:53:47,942 - INFO - CCIP messageId (pre-send): 6c9ef508f8e06185652d2146e2478fe03b2b000205e79c5e5ba7b60a4fad771d
+2025-04-09 18:34:59,608 - INFO - Account Data: {
+  "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84": {
+    "ethereum": {
+      "usdc": 0.00979,
+      "native_token": 4.132747937321e-06,
+      "usd_balance": 0.00979
+    },
+    "optimism": {
+      "usdc": 1.0,
+      "native_token": 0.001397223622087085,
+      "usd_balance": 0.999977
+    },
+    "avalanche": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999977
+    },
+    "arbitrum": {
+      "usdc": 0.054262,
+      "native_token": 0.002478510076281036,
+      "usd_balance": 0.054261
+    },
+    "polygon": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999977
+    },
+    "base": {
+      "usdc": 5.0,
+      "native_token": 0.0,
+      "usd_balance": 4.999885
+    }
+  },
+  "0x58a4Cae5e8dDA3a5614972F34951e482a29ef0f0": {
+    "ethereum": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "optimism": {
+      "usdc": 0.0,
+      "native_token": 0.0005,
+      "usd_balance": 0.0
+    },
+    "avalanche": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "arbitrum": {
+      "usdc": 0.0,
+      "native_token": 9.9904924548e-05,
+      "usd_balance": 0.0
+    },
+    "polygon": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "base": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    }
+  },
+  "TOTAL USD VALUE": {
+    "by_network": {
+      "ethereum": 0.01,
+      "optimism": 1.0,
+      "avalanche": 1.0,
+      "arbitrum": 0.05,
+      "polygon": 1.0,
+      "base": 5.0
+    },
+    "total_usd": 8.06
+  },
+  "largest_balance_dict": {
+    "max_wallet": "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84",
+    "max_network": "base",
+    "max_usdc_balance": 5.0,
+    "account_index": 0
+  }
+}
+2025-04-09 18:34:59,612 - INFO - Largest Balance Info: {'max_wallet': '0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84', 'max_network': 'base', 'max_usdc_balance': 5.0, 'account_index': 0}
+2025-04-09 18:36:46,566 - INFO - Account Data: {
+  "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84": {
+    "ethereum": {
+      "usdc": 0.00979,
+      "native_token": 4.132747937321e-06,
+      "usd_balance": 0.00979
+    },
+    "optimism": {
+      "usdc": 1.0,
+      "native_token": 0.001397223622087085,
+      "usd_balance": 0.999956
+    },
+    "avalanche": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999956
+    },
+    "arbitrum": {
+      "usdc": 0.054262,
+      "native_token": 0.002478510076281036,
+      "usd_balance": 0.05426
+    },
+    "polygon": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999956
+    },
+    "base": {
+      "usdc": 5.0,
+      "native_token": 0.0,
+      "usd_balance": 4.99978
+    }
+  },
+  "0x58a4Cae5e8dDA3a5614972F34951e482a29ef0f0": {
+    "ethereum": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "optimism": {
+      "usdc": 0.0,
+      "native_token": 0.0005,
+      "usd_balance": 0.0
+    },
+    "avalanche": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "arbitrum": {
+      "usdc": 0.0,
+      "native_token": 9.9904924548e-05,
+      "usd_balance": 0.0
+    },
+    "polygon": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "base": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    }
+  },
+  "TOTAL USD VALUE": {
+    "by_network": {
+      "ethereum": 0.01,
+      "optimism": 1.0,
+      "avalanche": 1.0,
+      "arbitrum": 0.05,
+      "polygon": 1.0,
+      "base": 5.0
+    },
+    "total_usd": 8.06
+  },
+  "largest_balance_dict": {
+    "max_wallet": null,
+    "max_network": null,
+    "max_usdc_balance": 0.0,
+    "account_index": null
+  }
+}
+2025-04-09 18:36:46,570 - INFO - Largest Balance Info: {'max_wallet': None, 'max_network': None, 'max_usdc_balance': 0.0, 'account_index': None}
+2025-04-09 18:38:13,360 - INFO - Account Data: {
+  "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84": {
+    "ethereum": {
+      "usdc": 0.00979,
+      "native_token": 4.132747937321e-06,
+      "usd_balance": 0.00979
+    },
+    "optimism": {
+      "usdc": 1.0,
+      "native_token": 0.001397223622087085,
+      "usd_balance": 0.999954
+    },
+    "avalanche": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999954
+    },
+    "arbitrum": {
+      "usdc": 0.054262,
+      "native_token": 0.002478510076281036,
+      "usd_balance": 0.05426
+    },
+    "polygon": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999954
+    },
+    "base": {
+      "usdc": 5.0,
+      "native_token": 0.0,
+      "usd_balance": 4.99977
+    }
+  },
+  "0x58a4Cae5e8dDA3a5614972F34951e482a29ef0f0": {
+    "ethereum": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "optimism": {
+      "usdc": 0.0,
+      "native_token": 0.0005,
+      "usd_balance": 0.0
+    },
+    "avalanche": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "arbitrum": {
+      "usdc": 0.0,
+      "native_token": 9.9904924548e-05,
+      "usd_balance": 0.0
+    },
+    "polygon": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "base": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    }
+  },
+  "TOTAL USD VALUE": {
+    "by_network": {
+      "ethereum": 0.01,
+      "optimism": 1.0,
+      "avalanche": 1.0,
+      "arbitrum": 0.05,
+      "polygon": 1.0,
+      "base": 5.0
+    },
+    "total_usd": 8.06
+  },
+  "largest_balance_dict": {
+    "max_wallet": "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84",
+    "max_network": "optimism",
+    "max_usdc_balance": 1.0,
+    "account_index": 0
+  }
+}
+2025-04-09 18:38:13,363 - INFO - Largest Balance Info: {'max_wallet': '0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84', 'max_network': 'optimism', 'max_usdc_balance': 1.0, 'account_index': 0}
+2025-04-09 18:46:26,171 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-09 18:46:35,285 - INFO - CCIP messageId (pre-send): cb060f20da2885a87b43448540a29fcc5d18764e683f6c46da28af60678120fc
+2025-04-09 18:46:37,985 - WARNING - TX 5061d5625c960ca68606840faabfdcf2e83a344818ba28d1f6ced9e4b6d8aed1 mined but failed. Check: https://base.blockscout.com/tx/0x5061d5625c960ca68606840faabfdcf2e83a344818ba28d1f6ced9e4b6d8aed1
+2025-04-09 18:46:38,441 - INFO - CCIP Transfer Submitted: 5061d5625c960ca68606840faabfdcf2e83a344818ba28d1f6ced9e4b6d8aed1, Message ID: 0xcb060f20da2885a87b43448540a29fcc5d18764e683f6c46da28af60678120fc
+2025-04-09 18:51:25,202 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-09 18:51:31,766 - INFO - CCIP messageId (pre-send): cb060f20da2885a87b43448540a29fcc5d18764e683f6c46da28af60678120fc
+2025-04-09 18:51:33,354 - INFO - CCIP Transfer Submitted: 2a5ad1ee10d07200942f28047fa2b232fb42e62514e8b583d6ba3f06edf33ebe, Message ID: 0xcb060f20da2885a87b43448540a29fcc5d18764e683f6c46da28af60678120fc
