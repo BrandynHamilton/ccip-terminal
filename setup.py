@@ -16,9 +16,8 @@ setup(
         "cryptography"
     ],
     extras_require={
-        "fiat-ramps": ["flask", "requests"],
         "scheduler": ["apscheduler", "flask"],
-        "all": ["flask", "requests", "apscheduler"]
+        "all": ["flask", "apscheduler"]
     },
     entry_points={
         "console_scripts": [

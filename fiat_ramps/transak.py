@@ -1,6 +1,7 @@
 # fiat_ramps/transak.py
 
 import requests
+from urllib.parse import urlencode
 from .config import TRANSAK_API_KEY, REDIRECT_URL
 from ccip_terminal.metadata import FALLBACK_GAS_TOKENS
 from ccip_terminal.decorators import ttl_cache
@@ -49,39 +50,37 @@ def get_transak_token_metadata():
         print(f"⚠️ Failed to fetch Transak metadata, falling back: {e}")
         return FALLBACK_GAS_TOKENS
 
-def create_transak_session(wallet_address, amount, network="ethereum",purchase_type='usdc'):
+def create_transak_session(wallet_address, amount, network="ethereum", purchase_type='usdc'):
     """
-    Create a Transak payment session.
+    Create a Transak session URL to redirect the user.
 
     Args:
         wallet_address (str): Destination wallet.
         amount (float): Fiat amount in USD.
-        crypto_currency_code (str): Cryptocurrency code to purchase (e.g., 'ETH' for gas, 'USDC' for stablecoin).
         network (str): Blockchain network.
+        purchase_type (str): 'usdc' or 'gas' (to determine which token to use)
 
     Returns:
-        dict: Transak session data.
+        str: Transak URL for initiating payment
     """
     token_map = get_transak_token_metadata()
-
     crypto_currency_code = "USDC" if purchase_type == "usdc" else token_map.get(network, FALLBACK_GAS_TOKENS[network])
 
-    url = "https://api.transak.com/api/v2/transactions"
-    payload = {
+    base_url = "https://global.transak.com/"
+    query_params = {
         "apiKey": TRANSAK_API_KEY,
         "walletAddress": wallet_address,
-        "fiatAmount": amount,
         "cryptoCurrencyCode": crypto_currency_code,
-        "fiatCurrency": "USD",
         "network": network,
+        "fiatCurrency": "USD",
+        "fiatAmount": int(amount),
         "redirectURL": REDIRECT_URL,
+        "disableWalletAddressForm": "true",
+        "productsAvailed": "BUY",
+        "themeColor": "000000",
+        "colorMode": "DARK"
     }
 
-    response = requests.post(url, json=payload)
-    data = response.json()
-
-    if data.get("status") != "SUCCESS":
-        raise Exception(f"Failed to create Transak session: {data.get('message')}")
-
-    print(f"🔗 Payment link: {data['data']['url']}")
-    return data
+    full_url = f"{base_url}?{urlencode(query_params)}"
+    print(f"🔗 Transak On-Ramp URL: {full_url}")
+    return full_url

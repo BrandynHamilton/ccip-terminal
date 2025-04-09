@@ -75,3 +75,54 @@
 2025-04-07 21:59:55,425 - INFO - CCIP messageId (pre-send): 20a0c0c651deab895bd7c9e96ee92cba9b27ed84845ebc5dd7c471e21a2e339d
 2025-04-07 21:59:57,854 - INFO - CCIP Transfer submitted (Type 2): 8e2d969639bd8af76c667bfb2f973fa527dc7b98481e3d323fb49eb3d353457f | View: https://ccip-bradford-solana-streams-chainlinklabs.vercel.app/tx/0x8e2d969639bd8af76c667bfb2f973fa527dc7b98481e3d323fb49eb3d353457f
 2025-04-07 21:59:57,855 - INFO - [Dynamic] Sent 1.0 USDC to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 | TX: 8e2d969639bd8af76c667bfb2f973fa527dc7b98481e3d323fb49eb3d353457f | ID: 20a0c0c651deab895bd7c9e96ee92cba9b27ed84845ebc5dd7c471e21a2e339d
+2025-04-08 10:37:17,060 - INFO - Account Data: {'0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84': {'ethereum': {'usdc': 0.0, 'native_token': 0.0, 'usd_balance': 0.0}, 'optimism': {'usdc': 20.0, 'native_token': 0.002555837714207815, 'usd_balance': 19.9978}, 'avalanche': {'usdc': 0.0, 'native_token': 0.0, 'usd_balance': 0.0}, 'arbitrum': {'usdc': 6.464262, 'native_token': 0.006776969014892215, 'usd_balance': 6.463551}, 'polygon': {'usdc': 1.0, 'native_token': 0.0, 'usd_balance': 0.99989}, 'base': {'usdc': 4.0, 'native_token': 0.0, 'usd_balance': 3.99956}}, '0x58a4Cae5e8dDA3a5614972F34951e482a29ef0f0': {'ethereum': {'usdc': 0.0, 'native_token': 0.0, 'usd_balance': 0.0}, 'optimism': {'usdc': 0.0, 'native_token': 0.0005, 'usd_balance': 0.0}, 'avalanche': {'usdc': 0.0, 'native_token': 0.0, 'usd_balance': 0.0}, 'arbitrum': {'usdc': 2.0, 'native_token': 0.000997545234548, 'usd_balance': 1.99978}, 'polygon': {'usdc': 0.0, 'native_token': 0.0, 'usd_balance': 0.0}, 'base': {'usdc': 0.0, 'native_token': 0.0, 'usd_balance': 0.0}}, 'TOTAL USD VALUE': {'by_network': {'ethereum': 0.0, 'optimism': 20.0, 'avalanche': 0.0, 'arbitrum': 8.46, 'polygon': 1.0, 'base': 4.0}, 'total_usd': 33.46}, 'largest_balance_dict': {'max_wallet': '0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84', 'max_network': 'optimism', 'max_usdc_balance': 20.0, 'account_index': 0}}
+2025-04-08 10:37:17,061 - INFO - Largest Balance Info: {'max_wallet': '0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84', 'max_network': 'optimism', 'max_usdc_balance': 20.0, 'account_index': 0}
+2025-04-08 10:54:43,156 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 10:55:52,490 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 10:56:41,784 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 10:56:57,113 - INFO - CCIP messageId (pre-send): d3a61f6c60da707fbc32b362b0144e01f742f119ff752429e9c7c87ae060c81c
+2025-04-08 10:56:59,711 - INFO - CCIP Transfer Submitted: 8336274d3354054f782afd20a5e42e98fefeb37e8a718e6e62f6b69879b988c4, Message ID: d3a61f6c60da707fbc32b362b0144e01f742f119ff752429e9c7c87ae060c81c
+2025-04-08 13:55:29,588 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-08 13:55:47,129 - INFO - CCIP messageId (pre-send): 7218e37d7822ca783d7309163f970038fe4de62dbf5343aed468c90ff5063a25
+2025-04-08 13:55:48,631 - WARNING - CCIP Transfer 26755740eedef13d7f47d46f9aa14d4c7d7adbd14f69427e512e9bd93dcc9c84 was mined but failed (status=0). Investigate. | View: https://ccip.chain.link/#/side-drawer/msg/0x26755740eedef13d7f47d46f9aa14d4c7d7adbd14f69427e512e9bd93dcc9c84
+2025-04-08 13:55:48,632 - INFO - CCIP Transfer Submitted: 26755740eedef13d7f47d46f9aa14d4c7d7adbd14f69427e512e9bd93dcc9c84, Message ID: 7218e37d7822ca783d7309163f970038fe4de62dbf5343aed468c90ff5063a25
+2025-04-08 13:58:56,175 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-08 13:59:12,962 - INFO - CCIP messageId (pre-send): 87c56ddd055c749e4ad7d102ad6bb9296b3b7d28c0c7af9761e2cbbec8504964
+2025-04-08 13:59:14,240 - WARNING - CCIP Transfer 6a9974d7a5e494c5437b123960512435f73536cef5e29d31918fffe8f373914b was mined but failed (status=0). Investigate. | View: https://ccip.chain.link/#/side-drawer/msg/0x6a9974d7a5e494c5437b123960512435f73536cef5e29d31918fffe8f373914b
+2025-04-08 13:59:14,241 - INFO - CCIP Transfer Submitted: 6a9974d7a5e494c5437b123960512435f73536cef5e29d31918fffe8f373914b, Message ID: 87c56ddd055c749e4ad7d102ad6bb9296b3b7d28c0c7af9761e2cbbec8504964
+2025-04-08 14:21:32,216 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-08 14:21:53,075 - INFO - CCIP messageId (pre-send): 5cb3666ecfc6f4d64f87fc4d1bff94bb23d6774a1cebbc00c6058b87132d6825
+2025-04-08 14:21:54,385 - INFO - CCIP Transfer Submitted: f495f5b1671fe087dd237eefba066244d3cd39fdc74c557392a5632ce584029f, Message ID: 5cb3666ecfc6f4d64f87fc4d1bff94bb23d6774a1cebbc00c6058b87132d6825
+2025-04-08 15:16:44,822 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on avalanche
+2025-04-08 15:19:15,695 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on avalanche
+2025-04-08 16:33:10,045 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on avalanche
+2025-04-08 16:33:45,064 - INFO - CCIP messageId (pre-send): b0d74a6af24506b53512b1ce8b3cff7df89316eceaa7792df38e35d6afee2da6
+2025-04-08 16:33:46,416 - INFO - CCIP Transfer Submitted: a29188b89299bfc0b777992b35f0c9a851b4f66111e329d4d76c1d681b277617, Message ID: b0d74a6af24506b53512b1ce8b3cff7df89316eceaa7792df38e35d6afee2da6
+2025-04-08 17:29:00,664 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-08 17:29:37,089 - INFO - CCIP messageId (pre-send): d301a7da367449035e9d45cb0ec850587b6586293a0a2939c4d26a7b48914001
+2025-04-08 17:29:38,595 - INFO - CCIP Transfer Submitted: c65576e7ad829d505381fa55cce050384069eebe66157fc524de0f3bb619e2d6, Message ID: d301a7da367449035e9d45cb0ec850587b6586293a0a2939c4d26a7b48914001
+2025-04-08 17:38:47,027 - INFO - Running batch transfer from file: ./data/batch_file.json
+2025-04-08 17:38:47,027 - ERROR - Batch file data\batch_file.json not found.
+2025-04-08 17:39:15,017 - INFO - Running batch transfer from file: ./data/batch_transfer.json
+2025-04-08 17:39:54,688 - INFO - CCIP messageId (pre-send): 6071718697b4af55f15c861d195b9f20fc1b2e6bafc49b11742ef3fffd72e413
+2025-04-08 17:39:56,005 - INFO - Sent 1.0 USDC to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 | TX: 460bfa6713c429836e2f815ea2942f9948d888d8f172fd04f05066a43de1580c | ID: 6071718697b4af55f15c861d195b9f20fc1b2e6bafc49b11742ef3fffd72e413
+2025-04-08 17:40:09,078 - ERROR - Transfer failed for 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 | Error: 'NoneType' object has no attribute 'lower'
+2025-04-08 17:40:46,632 - INFO - CCIP messageId (pre-send): 1f6316bfe9ba780ba91d4f5ed20c12bc59dae6c999795b02907a8ce9051d5413
+2025-04-08 17:40:47,910 - INFO - Sent 1.0 USDC to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 | TX: 3ceb3800dfcb8e036af0be1df453fafa5851423f3222bf2b1ef0856fddfef9fd | ID: 1f6316bfe9ba780ba91d4f5ed20c12bc59dae6c999795b02907a8ce9051d5413
+2025-04-08 18:17:50,542 - INFO - CCIP messageId (pre-send): 1a7f516fd72a1d4797aab37f741b055a5d0977abb91be843c928a0a70ebac537
+2025-04-08 18:38:22,687 - INFO - CCIP messageId (pre-send): 46e0dd8ccd971a48ccf2ea84cf297f779b646c7233cc57b661a2009633aa02ac
+2025-04-08 19:06:50,101 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:07:27,526 - INFO - CCIP messageId (pre-send): 68cfa272920c7b56873b532e41150c267446b6d9bda9afd5cb0766b35e6d5c29
+2025-04-08 19:07:35,800 - INFO - CCIP Transfer Submitted: 2131caa291ddf4f7a13e869efb44752e997ca3b177ee5b1234067617c0f69b9d, Message ID: 68cfa272920c7b56873b532e41150c267446b6d9bda9afd5cb0766b35e6d5c29
+2025-04-08 19:26:03,846 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:30:40,952 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:31:54,017 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:33:08,597 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:34:44,099 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:38:10,520 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:39:40,402 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:41:49,186 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:51:10,425 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
+2025-04-08 19:51:20,337 - INFO - CCIP messageId (pre-send): a38bb1ab664b76cda4c67c23f8cba5ab75196d90711f2646399afe78568d3bc8
+2025-04-08 19:51:22,422 - WARNING - TX 246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173 mined but failed. Check: https://optimism.blockscout.com/tx/0x246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173
+2025-04-08 19:51:23,180 - INFO - CCIP Transfer Submitted: 246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173, Message ID: a38bb1ab664b76cda4c67c23f8cba5ab75196d90711f2646399afe78568d3bc8

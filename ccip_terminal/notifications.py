@@ -1,6 +1,6 @@
 import smtplib
 from email.message import EmailMessage
-from twilio.rest import Client
+# from twilio.rest import Client
 import os
 
 def send_email_notification(subject, body, recipient_email):
@@ -28,22 +28,22 @@ def send_email_notification(subject, body, recipient_email):
     except Exception as e:
         print(f"❌ Failed to send email: {e}")
 
-def send_sms_notification(body, recipient_number):
-    twilio_sid = os.getenv("TWILIO_ACCOUNT_SID")
-    twilio_token = os.getenv("TWILIO_AUTH_TOKEN")
-    twilio_number = os.getenv("TWILIO_PHONE_NUMBER")
+# def send_sms_notification(body, recipient_number):
+#     twilio_sid = os.getenv("TWILIO_ACCOUNT_SID")
+#     twilio_token = os.getenv("TWILIO_AUTH_TOKEN")
+#     twilio_number = os.getenv("TWILIO_PHONE_NUMBER")
 
-    if not all([twilio_sid, twilio_token, twilio_number, recipient_number]):
-        print("Missing SMS notification environment variables.")
-        return
+#     if not all([twilio_sid, twilio_token, twilio_number, recipient_number]):
+#         print("Missing SMS notification environment variables.")
+#         return
 
-    try:
-        client = Client(twilio_sid, twilio_token)
-        message = client.messages.create(
-            body=body,
-            from_=twilio_number,
-            to=recipient_number
-        )
-        print(f"✅ SMS sent to {recipient_number}")
-    except Exception as e:
-        print(f"❌ Failed to send SMS: {e}")
+#     try:
+#         client = Client(twilio_sid, twilio_token)
+#         message = client.messages.create(
+#             body=body,
+#             from_=twilio_number,
+#             to=recipient_number
+#         )
+#         print(f"✅ SMS sent to {recipient_number}")
+#     except Exception as e:
+#         print(f"❌ Failed to send SMS: {e}")

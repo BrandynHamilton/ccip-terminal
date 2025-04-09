@@ -15,9 +15,15 @@ def schedule_ccip_transfer(wallet, amount, dest_chain, source_chain, account_ind
     """
     def job():
         print(f"🚀 Scheduled CCIP transfer: {amount} USDC → {dest_chain} → {wallet}")
-        receipt, message_id = send_ccip_transfer(to_address=wallet, dest_chain=dest_chain, amount=amount, 
+        receipt, links, success, message_id = send_ccip_transfer(to_address=wallet, dest_chain=dest_chain, amount=amount, 
                                     source_chain=source_chain, account_index=account_index)
-        logger.info(f"CCIP Transfer Submitted: {receipt.transactionHash.hex()}, Message ID: {message_id}")
+        if success:
+            logger.info(f"CCIP Transfer Submitted Successfully: {receipt.transactionHash.hex()}, Message ID: {message_id}")
+        else:
+            logger.info(f"CCIP Transfer Failed: {receipt.transactionHash.hex()}, Message ID: {message_id}")
+            
+        print(f"Source TX: {links['source_url']}")
+        print(f"CCIP Explorer: {links['ccip_url']}")
 
     trigger = CronTrigger.from_crontab(cron_expr)
     job_ref = scheduler.add_job(job, trigger)

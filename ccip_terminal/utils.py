@@ -165,7 +165,7 @@ def calculate_usd_values(BALANCES_DICT, usdc_price):
 
     return BALANCES_DICT
 
-def get_largest_balance(BALANCES_DICT, account_obj=None, min_gas_threshold=0.001, exclude_chain=None):
+def get_largest_balance(BALANCES_DICT, account_obj=None, min_gas_threshold=0.003, exclude_chain=None):
     max_wallet = None
     max_network = None
     max_usdc_balance = 0.0
@@ -189,7 +189,7 @@ def get_largest_balance(BALANCES_DICT, account_obj=None, min_gas_threshold=0.001
         print(f"Wallet with highest USDC balance (gas OK, excluding '{exclude_chain}'): {max_wallet}")
         print(f"Network: {max_network} | USDC: {max_usdc_balance}")
     else:
-        print("⚠️ No wallet met the gas threshold or destination exclusion.")
+        print(f"No wallet met the gas threshold or destination exclusion {min_gas_threshold}.")
 
     return {
         'max_wallet': max_wallet,
@@ -234,7 +234,6 @@ def check_ccip_lane(router, dest_selector):
     is_supported = router.functions.isChainSupported(dest_selector).call()
     if not is_supported:
         raise Exception(f"❌ No outbound lane configured to dest selector: {dest_selector}")
-    print(f"✅ Destination chain selector {dest_selector} is supported")
 
 def check_offramp(router, dest_selector):
     offramps = router.functions.getOffRamps().call()
@@ -256,11 +255,11 @@ def approve_token_if_needed(token_address,
 
     # 1. Check current allowance
     current_allowance = token_contract.functions.allowance(account.address, spender).call()
-    print(f"Current allowance: {current_allowance}")
 
     if current_allowance >= threshold:
-        print(f"✅ Sufficient allowance ({current_allowance}), skipping approval.")
         return True
+    
+    print(f"Approving Router to Spend Tokens")
 
     # 2. Build approve transaction
     nonce = w3.eth.get_transaction_count(account.address)
@@ -276,10 +275,6 @@ def approve_token_if_needed(token_address,
         base_fee = latest_block["baseFeePerGas"]
         max_priority_fee = w3.to_wei(2, "gwei")  # Reasonable tip for Arbitrum
         max_fee_per_gas = base_fee + max_priority_fee
-
-        print(f"Base Fee: {w3.from_wei(base_fee, 'gwei')} gwei")
-        print(f"Priority Fee: {w3.from_wei(max_priority_fee, 'gwei')} gwei")
-        print(f"Max Fee: {w3.from_wei(max_fee_per_gas, 'gwei')} gwei")
 
         # Update transaction with EIP-1559 gas settings
         approve_txn["maxFeePerGas"] = max_fee_per_gas
@@ -300,21 +295,21 @@ def approve_token_if_needed(token_address,
         approve_txn["gas"] = gas_estimate
         print(f"Gas estimate: {gas_estimate}")
     except Exception as e:
-        print(f"⚠️ Gas estimation failed: {e}")
+        print(f"Gas estimation failed: {e}")
         approve_txn["gas"] = 60000  
 
     # 3. Sign and send
     signed_txn = w3.eth.account.sign_transaction(approve_txn, private_key=private_key)
     tx_hash = w3.eth.send_raw_transaction(signed_txn.raw_transaction)
-    print(f"🔑 Approval Transaction Sent: {tx_hash.hex()}")
+    print(f"Approval Transaction Sent: {tx_hash.hex()}")
 
     receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
-    print(f"✅ Approval Transaction Mined: {tx_hash.hex()}")
+    print(f"Approval Transaction Mined: {tx_hash.hex()}")
 
     return receipt.status == 1
 
 def estimate_dynamic_gas(chain_name,
-                        buffer=1.2, default_gas=300_000, max_gas=1_200_000):
+                        buffer=1.015, default_gas=300_000, max_gas=1_200_000):
     """
     Dynamically estimate gas limit for CCIP transfer.
     
@@ -344,6 +339,78 @@ def estimate_dynamic_gas(chain_name,
     # except Exception as e:
     #     logger.warning(f"⚠️ Gas estimation failed, fallback used. Reason: {e}")
     return int(gas_limit)
+
+def get_dynamic_gas_fees(w3, default_priority_gwei=5):
+    """
+    Estimate dynamic gas fee parameters using Web3.
+
+    Args:
+        w3: A Web3 instance.
+        tx_type (int): 2 = EIP-1559, 0 = legacy.
+        default_priority_gwei (int): Fallback priority fee if none available.
+
+    Returns:
+        dict: Gas fee settings for a transaction.
+    """
+    latest_block = w3.eth.get_block("latest")
+    base_fee = latest_block.get("baseFeePerGas", 0)
+
+    # maxPriorityFee is not always exposed
+    try:
+        suggested_priority = getattr(w3.eth, 'max_priority_fee', None)
+        if callable(suggested_priority):
+            priority_fee = suggested_priority()
+        else:
+            priority_fee = w3.to_wei(default_priority_gwei, "gwei")
+    except Exception:
+        priority_fee = w3.to_wei(default_priority_gwei, "gwei")
+
+    return {
+        "base_fee": base_fee,
+        "max_priority_fee": priority_fee,
+        "max_fee_per_gas": base_fee + priority_fee,
+        "gas_price": w3.eth.gas_price
+    }
+
+def generate_explorer_links(chain_name, tx_hash, message_id=None, w3=None):
+    """
+    Generate source chain explorer URL and CCIP Explorer URL.
+
+    Args:
+        chain_name (str): Name of the source chain (e.g., 'ethereum', 'arbitrum').
+        tx_hash (str or HexBytes): Transaction hash.
+        message_id (str or None): CCIP message ID (optional).
+        w3: Web3 instance (used only for fallback chain ID display on Avalanche).
+
+    Returns:
+        dict: {
+            "source_url": <transaction URL>,
+            "ccip_url": <CCIP Explorer URL>,
+        }
+    """
+    tx_hash_hex = '0x'+tx_hash.hex() if hasattr(tx_hash, "hex") else tx_hash
+    chain_name = chain_name.lower()
+    
+    explorer_map = {
+        "ethereum": f"https://eth.blockscout.com/tx/{tx_hash_hex}",
+        "arbitrum": f"https://arbitrum.blockscout.com/tx/{tx_hash_hex}",
+        "optimism": f"https://optimism.blockscout.com/tx/{tx_hash_hex}",
+        "base": f"https://base.blockscout.com/tx/{tx_hash_hex}",
+        "polygon": f"https://polygon.blockscout.com/tx/{tx_hash_hex}",
+        "avalanche": f"https://snowtrace.io/tx/{tx_hash_hex}"
+    }
+
+    # Special case: Avalanche requires chain ID in query string for proper routing
+    if chain_name == "avalanche" and w3:
+        explorer_map["avalanche"] += f"?chainid={w3.eth.chain_id}"
+
+    source_url = explorer_map.get(chain_name, f"Unknown chain: {chain_name}")
+    ccip_url = f"https://ccip.chain.link/#/side-drawer/msg/0x{message_id}" if message_id else None
+
+    return {
+        "source_url": source_url,
+        "ccip_url": ccip_url
+    }
 
 # def estimate_dynamic_gas(
 #     router,

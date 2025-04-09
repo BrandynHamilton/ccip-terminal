@@ -8,23 +8,21 @@ import time
 @api_cache
 def token_data(id='usd-coin', network=None, contract_address=None, timeout=10):
     """
-    Fetch token data from Coingecko API.
-    
+    Fetch token data from CoinGecko API.
+
     Args:
-        id (str): Coingecko token ID. If None, both `network` and `contract_address` must be provided.
+        id (str): CoinGecko token ID. If None, both `network` and `contract_address` must be provided.
         network (str): Blockchain network (e.g., 'ethereum').
         contract_address (str): Token contract address.
-    
+        timeout (int): Timeout for the API request in seconds.
+
     Returns:
-        dict: Token data from Coingecko.
-    
+        dict: Token data from CoinGecko.
+
     Raises:
         ValueError: If required parameters are missing or invalid.
-        requests.exceptions.RequestException: For HTTP/network errors.
+        RuntimeError: For HTTP/network errors or invalid API responses.
     """
-    if not COINGECKO_API_KEY:
-        raise ValueError("COINGECKO_API_KEY is missing or empty.")
-
     if id:
         url = f"https://api.coingecko.com/api/v3/coins/{id}"
     elif network and contract_address:
@@ -33,13 +31,16 @@ def token_data(id='usd-coin', network=None, contract_address=None, timeout=10):
         raise ValueError("Either `id` OR both `network` and `contract_address` must be provided.")
 
     headers = {
-        "accept": "application/json",
-        "x-cg-demo-api-key": COINGECKO_API_KEY
+        "accept": "application/json"
     }
+
+    # Include API key in headers if available
+    if COINGECKO_API_KEY:
+        headers["x-cg-demo-api-key"] = COINGECKO_API_KEY
 
     try:
         response = requests.get(url, headers=headers, timeout=timeout)
-        response.raise_for_status()  # raises HTTPError for bad status codes
+        response.raise_for_status()  # Raises HTTPError for bad status codes
         data = response.json()
         if not isinstance(data, dict):
             raise ValueError("Invalid response format.")
