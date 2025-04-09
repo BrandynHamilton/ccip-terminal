@@ -116,7 +116,7 @@ def transfer(to, dest, amount, source, batch_file, account_index, track_messages
         tx_hash = receipt.transactionHash.hex()
         logger.info(f"CCIP Transfer Submitted: {tx_hash}, Message ID: {message_id}")
 
-        if success:
+        if success and message_id:
             if track_messages:
                 status, address = check_ccip_message_status(
                     message_id_hex=message_id,
@@ -127,6 +127,8 @@ def transfer(to, dest, amount, source, batch_file, account_index, track_messages
                     print(f"Message {message_id} not found.")
                 else:
                     print(f"Status: {status} | OffRamp: {address}")
+        elif success:
+            print(f'Same Chain Transaction was Successful: {links}')
         else:
             print(f"Transaction was not successful (status=0). Try again with higher gas limit or fee parameters.")
 

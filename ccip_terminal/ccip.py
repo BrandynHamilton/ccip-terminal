@@ -8,6 +8,7 @@ from eth_utils import keccak, to_checksum_address
 from ccip_terminal.utils import (load_abi, logger, approve_token_if_needed, check_ccip_lane, 
                                  estimate_dynamic_gas, calculate_usd_values,get_largest_balance,
                                  get_dynamic_gas_fees,generate_explorer_links)
+from ccip_terminal.web3_utils import send_same_chain_transfer
 from ccip_terminal.accounts import load_accounts
 from ccip_terminal.env import ETHERSCAN_API_KEY
 from ccip_terminal.account_state import prepare_transfer_data, get_usdc_data
@@ -96,6 +97,32 @@ def send_ccip_transfer(to_address, dest_chain, amount,
         account = account_obj["account"]
         w3 = account_obj["w3"]
         print(f'source_chain after prepare transfer data in send ccip transfer: {source_chain}')
+
+    # If source and dest chains are the same, do a normal ERC20 transfer
+    if source_chain == dest_chain:
+        logger.info(f"Detected same-chain transfer on {source_chain}. Executing direct ERC20 transfer.")
+        receipt = send_same_chain_transfer(
+            w3=w3,
+            token_address=TOKEN_CONTRACTS[source_chain],
+            sender_account=account,
+            to_address=to_address,
+            amount=amount,
+            decimals=TOKEN_DECIMALS[source_chain]
+        )
+
+        tx_hash_hex = receipt.transactionHash.hex()
+
+        explorer_map = {
+            "ethereum": f"https://eth.blockscout.com/tx/{tx_hash_hex}",
+            "arbitrum": f"https://arbitrum.blockscout.com/tx/{tx_hash_hex}",
+            "optimism": f"https://optimism.blockscout.com/tx/{tx_hash_hex}",
+            "base": f"https://base.blockscout.com/tx/{tx_hash_hex}",
+            "polygon": f"https://polygon.blockscout.com/tx/{tx_hash_hex}",
+            "avalanche": f"https://snowtrace.io/tx/{tx_hash_hex}"
+        }
+        source_url = explorer_map.get(source_chain, f"Unknown chain: {source_chain}")
+        # Mimic CCIP return format
+        return receipt, {"source_url": source_url, "ccip_url": None}, True, None
 
     router_address = resolve_router_address(source_chain)
     router = w3.eth.contract(address=router_address, abi=ROUTER_ABI)

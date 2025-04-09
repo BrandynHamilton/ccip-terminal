@@ -127,3 +127,18 @@
 2025-04-08 19:51:22,422 - WARNING - TX 246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173 mined but failed. Check: https://optimism.blockscout.com/tx/0x246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173
 2025-04-08 19:51:23,180 - INFO - CCIP Transfer Submitted: 246fa50dfaa462bcb2c4a00222e7d3153796fe3450c4a34a2552e7009b035173, Message ID: a38bb1ab664b76cda4c67c23f8cba5ab75196d90711f2646399afe78568d3bc8
 2025-04-08 20:54:38,095 - INFO - Keystore saved to wallet_keystore.json
+2025-04-08 21:34:32,683 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
+2025-04-08 21:34:37,500 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
+2025-04-08 21:35:14,936 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
+2025-04-08 21:35:19,611 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
+2025-04-08 21:35:23,467 - INFO - CCIP Transfer Submitted: f14cdbd924a87b554ad6698a4e81cdca01f609b289ed6fcdbf45f6b093c1648f, Message ID: None
+2025-04-08 21:43:54,647 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
+2025-04-08 21:43:58,506 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
+2025-04-08 21:47:46,029 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
+2025-04-08 21:47:49,768 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
+2025-04-08 21:48:36,331 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
+2025-04-08 21:48:40,571 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
+2025-04-08 21:49:23,550 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
+2025-04-08 21:49:27,594 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
+2025-04-08 21:50:04,468 - INFO - Sending single transfer to 0x2083b0413869f7b5b9e0eA27d20CB6dD3535f525 on arbitrum
+2025-04-08 21:50:08,629 - INFO - Detected same-chain transfer on arbitrum. Executing direct ERC20 transfer.
