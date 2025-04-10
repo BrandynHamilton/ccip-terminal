@@ -8,7 +8,7 @@ from eth_utils import keccak, to_checksum_address
 from ccip_terminal.utils import (load_abi, logger, approve_token_if_needed, check_ccip_lane, 
                                  estimate_dynamic_gas, calculate_usd_values,get_largest_balance,
                                  get_dynamic_gas_fees,generate_explorer_links)
-from ccip_terminal.web3_utils import send_same_chain_transfer
+from ccip_terminal.web3_utils import send_same_chain_transfer, try_send_tx
 from ccip_terminal.accounts import load_accounts
 from ccip_terminal.env import ETHERSCAN_API_KEY
 from ccip_terminal.account_state import prepare_transfer_data, get_usdc_data
@@ -191,42 +191,11 @@ def send_ccip_transfer(to_address, dest_chain, amount,
     else:
         tx_params.update({"gasPrice": gas_price})
 
-    message_id = None
     try:
-        try:
-            message_id = router.functions.ccipSend(dest_selector, message).call({
-                "from": account.address,
-                "value": fee
-            })
-            logger.info(f"CCIP messageId (pre-send): {message_id.hex()}")
-        except Exception as e:
-            logger.warning(f"Could not prefetch CCIP messageId: {e}")
-
-        tx = router.functions.ccipSend(dest_selector, message).build_transaction(tx_params)
-
-        signed_tx = account.sign_transaction(tx)
-        
-        tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
-        receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
-
-        links = generate_explorer_links(source_chain, tx_hash, message_id.hex() if message_id else None)
-        success = receipt.status == 1
-
-        if not success:
-            logger.warning(f"TX {tx_hash.hex()} mined but failed. Check: {links['source_url']}")
-            try:
-                failed_tx = w3.eth.get_transaction(tx_hash)
-                w3.eth.call(failed_tx, block_identifier=receipt.blockNumber)
-            except Exception as revert_e:
-                print(f"↪Revert reason: {revert_e}")
-
-        message_id_hex = '0x'+ message_id.hex()
-
-        return receipt, links, success, message_id_hex if message_id else None
-
+        return try_send_tx(source_chain, router, dest_selector, message, tx_params, w3, account)
     except Exception as e:
-        if tx_type == 2:
-            logger.info(f"EIP-1559 tx failed: {e}. Retrying legacy (Type 0)...")
+        if tx_type == 2 and "status=0" not in str(e).lower():  # Retry if not a mined failure
+            logger.warning(f"EIP-1559 tx failed: {e}. Retrying legacy (Type 0)...")
             return send_ccip_transfer(
                 to_address=to_address,
                 dest_chain=dest_chain,
@@ -238,8 +207,8 @@ def send_ccip_transfer(to_address, dest_chain, amount,
                 estimate=estimate
             )
         else:
-            logger.error(f"Legacy tx failed: {e}")
-            raise
+            logger.error(f"Final failure (tx_type={tx_type}): {e}")
+            raise e
 
 def check_ccip_message_status(message_id_hex, dest_chain, wait=False, poll_interval=120, max_retries=15,etherscan_key=None):
     """

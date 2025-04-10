@@ -434,3 +434,32 @@
 2025-04-09 18:51:25,202 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on arbitrum
 2025-04-09 18:51:31,766 - INFO - CCIP messageId (pre-send): cb060f20da2885a87b43448540a29fcc5d18764e683f6c46da28af60678120fc
 2025-04-09 18:51:33,354 - INFO - CCIP Transfer Submitted: 2a5ad1ee10d07200942f28047fa2b232fb42e62514e8b583d6ba3f06edf33ebe, Message ID: 0xcb060f20da2885a87b43448540a29fcc5d18764e683f6c46da28af60678120fc
+2025-04-09 19:15:04,437 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-09 19:15:11,352 - INFO - CCIP messageId (pre-send): e2688f6d7a07f1827c6ad4d1e0720bfadf354a27f0a3ce912e5f04efca6470b1
+2025-04-09 19:15:12,684 - WARNING - TX ed7dedffef7a63ae912164cd49fc9a41fb39e77993c89ae9a16e620d35113c01 mined but failed. Check: https://arbitrum.blockscout.com/tx/0xed7dedffef7a63ae912164cd49fc9a41fb39e77993c89ae9a16e620d35113c01
+2025-04-09 19:15:13,199 - WARNING - Revert reason: {'code': -32000, 'message': 'both gasPrice and (maxFeePerGas or maxPriorityFeePerGas) specified'}
+2025-04-09 19:15:13,200 - INFO - CCIP Transfer Submitted: ed7dedffef7a63ae912164cd49fc9a41fb39e77993c89ae9a16e620d35113c01, Message ID: 0xe2688f6d7a07f1827c6ad4d1e0720bfadf354a27f0a3ce912e5f04efca6470b1
+2025-04-09 19:16:23,158 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-09 19:16:29,382 - INFO - CCIP messageId (pre-send): e2688f6d7a07f1827c6ad4d1e0720bfadf354a27f0a3ce912e5f04efca6470b1
+2025-04-09 19:16:30,713 - INFO - CCIP Transfer Submitted: a48301e91990ed188348b7d0c047522a29f0bea64a1da52b4567d28f7274200d, Message ID: 0xe2688f6d7a07f1827c6ad4d1e0720bfadf354a27f0a3ce912e5f04efca6470b1
+2025-04-09 19:19:29,757 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-09 19:19:34,538 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-09 19:19:40,615 - INFO - CCIP messageId (pre-send): c838327a938615b6b5301c5d6c5c700738b8d8d5b22f43c996443d0b10fdc399
+2025-04-09 19:19:41,908 - ERROR - TX Failed inside try_send_tx: TX failed with status=0
+2025-04-09 19:19:41,908 - WARNING - EIP-1559 tx failed: TX failed with status=0. Retrying legacy (Type 0)...
+2025-04-09 19:19:44,655 - INFO - CCIP messageId (pre-send): c838327a938615b6b5301c5d6c5c700738b8d8d5b22f43c996443d0b10fdc399
+2025-04-09 19:19:46,008 - ERROR - TX Failed inside try_send_tx: TX failed with status=0
+2025-04-09 19:19:46,009 - ERROR - Legacy tx also failed: TX failed with status=0
+2025-04-09 19:23:06,255 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-09 19:23:13,093 - INFO - CCIP messageId (pre-send): 7f65e689d59db544d367110757118530f6871ecc33561fdfc555232bfb1beb6d
+2025-04-09 19:23:14,252 - INFO - CCIP Transfer Submitted: a289c8a7c736d6add3e12a809f0356c100c7874ce6d397006a7f6e945841e626, Message ID: 0x7f65e689d59db544d367110757118530f6871ecc33561fdfc555232bfb1beb6d
+2025-04-09 19:23:31,715 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-09 19:23:37,998 - INFO - CCIP messageId (pre-send): 6d701d21f48e7d63afc3b2d53600a46d720763fe72081dff622ebcbb6d935112
+2025-04-09 19:23:39,369 - ERROR - TX Failed inside try_send_tx: TX failed with status=0
+2025-04-09 19:23:39,369 - ERROR - Legacy tx also failed: TX failed with status=0
+2025-04-09 19:29:13,841 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-09 19:29:20,308 - INFO - CCIP messageId (pre-send): 3a08916be235237ff359dc7b6e6b38b4d9a2aa9b051d0c2924ebe1eff59e89c1
+2025-04-09 19:29:21,393 - WARNING - TX d789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516 mined but failed. Check: https://arbitrum.blockscout.com/tx/0xd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516
+2025-04-09 19:29:21,858 - WARNING - Revert reason: {'code': -32000, 'message': 'both gasPrice and (maxFeePerGas or maxPriorityFeePerGas) specified'}
+2025-04-09 19:29:21,858 - ERROR - TX Failed inside try_send_tx: ('TX failed with status=0', {'tx_hash': 'd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516', 'links': {'source_url': 'https://arbitrum.blockscout.com/tx/0xd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516', 'ccip_url': 'https://ccip.chain.link/#/side-drawer/msg/0x3a08916be235237ff359dc7b6e6b38b4d9a2aa9b051d0c2924ebe1eff59e89c1'}})
+2025-04-09 19:29:21,859 - ERROR - Final failure (tx_type=2): ('TX failed with status=0', {'tx_hash': 'd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516', 'links': {'source_url': 'https://arbitrum.blockscout.com/tx/0xd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516', 'ccip_url': 'https://ccip.chain.link/#/side-drawer/msg/0x3a08916be235237ff359dc7b6e6b38b4d9a2aa9b051d0c2924ebe1eff59e89c1'}})

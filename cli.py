@@ -242,7 +242,7 @@ def remove(name):
     else:
         click.echo("❌ Not found.")
 
-# 🔑 (Optional) Fiat Onramps are For KYB'd Clients...
+# 🔑 (Optional) Fiat Onramps are For KYB'd Accounts...
 
 # # RAMP ONRAMP
 # @cli.command()
