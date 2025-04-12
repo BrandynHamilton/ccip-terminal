@@ -79,7 +79,7 @@ FALLBACK_GAS_TOKENS = {
 
 GAS_LIMITS_BY_CHAIN = {
     'ethereum': 500_000,
-    'arbitrum': 200_000,
+    'arbitrum': 400_000,
     'optimism': 400_000,
     'base': 400_000,
     'polygon': 400_000,

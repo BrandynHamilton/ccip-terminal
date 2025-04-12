@@ -107,8 +107,6 @@ typing_extensions==4.13.0
 tzdata==2025.2
 tzlocal==5.3.1
 urllib3==2.3.0
-# Editable install with no version control (usdc-transfer==0.1.0)
--e e:\projects\usdc-transfer
 wcwidth==0.2.13
 web3==7.10.0
 websockets==15.0.1

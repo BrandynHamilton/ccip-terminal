@@ -72,7 +72,7 @@ def estimate_gas_cost(to, dest, amount, source, account_index, tx_type, min_gas)
                           tx_type=tx_type, min_gas_threshold=min_gas)
     print(estimate["total_estimate"] / 1e18, "Fee Token (ETH/AVAX/MATIC) estimated")
 
-# 🚀 TRANSFER COMMAND
+# TRANSFER COMMAND
 @cli.command()
 @click.option('--to', help='Destination wallet address.')
 @click.option('--dest', help='Destination chain.')
@@ -176,7 +176,7 @@ def ccip_status(message_id, dest_chain, wait, timeout,interval,max_retries=120):
     else:
         print(f"Status: {status} | OffRamp: {address}")
 
-# ⏰ SCHEDULE TRANSFER
+# SCHEDULE TRANSFER
 @cli.command()
 @click.option('--to', required=True, help='Destination wallet.')
 @click.option('--amount', required=True, type=float, help='Amount in USDC.')
@@ -208,7 +208,7 @@ def create_wallet(insecure_save, encrypt):
 
     click.echo("Wallet setup complete.")
 
-# 📒 ADDRESS BOOK
+# ADDRESS BOOK
 @cli.group()
 def address():
     """Manage your saved wallet addresses."""
@@ -238,9 +238,9 @@ def remove(name):
     if name in book:
         del book[name]
         save_address_book(book)
-        click.echo(f"🗑 Removed {name}")
+        click.echo(f"Removed {name}")
     else:
-        click.echo("❌ Not found.")
+        click.echo("Not found.")
 
 # 🔑 (Optional) Fiat Onramps are For KYB'd Accounts...
 
