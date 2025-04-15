@@ -1,7 +1,7 @@
 from .utils import (get_token_decimals,
                     resolve_chain_name,approve_token_if_needed,
-                    extract_token_decimals,extract_token_contracts,
-                    to_checksum_dict,deep_checksum,load_abi)
+                    extract_token_decimals,extract_token_contracts,estimate_dynamic_gas,
+                    to_checksum_dict,deep_checksum,load_abi, get_dynamic_gas_fees)
 from .token_utils import get_balance
 from .metadata import (CHAIN_MAP, CHAIN_SELECTORS, ROUTER_MAP, FEE_TOKEN_ADDRESS)
 from .apis import (token_data) 

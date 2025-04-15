@@ -22,6 +22,8 @@ def resolve_chain_name(name):
     raise ValueError(f"Unknown chain name, alias, or coingecko name: {name}")
 
 def network_func(chain='ethereum', type='mainnet'):
+    if chain is None:
+        chain='ethereum'
     chain = chain.lower()
     chain = resolve_chain_name(chain)  # Will raise ValueError if invalid
 
