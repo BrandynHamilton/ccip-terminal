@@ -3,3 +3,7 @@
 /fiat_ramps
 /ccip_terminal_env
 wallet_keystore.json
+pyproject.toml
+build
+dist
+chartengineer_env

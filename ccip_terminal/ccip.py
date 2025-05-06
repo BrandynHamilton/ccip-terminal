@@ -26,7 +26,16 @@ def resolve_chain_selector(chain):
 def resolve_router_address(network):
     return ROUTER_MAP.get(network)
 
-def get_gas_limit_estimate(w3,source_chain, use_min=True, use_onchain_estimate=False):
+def get_chain_name_from_id(chain_id):
+    for name, meta in CHAIN_MAP.items():
+        if meta["chainID"] == chain_id:
+            return name
+    raise ValueError(f"Chain ID {chain_id} not found in CHAIN_MAP.")
+
+def get_gas_limit_estimate(w3, use_min=True, use_onchain_estimate=False):
+    chain_id = w3.eth.chain_id
+    source_chain = get_chain_name_from_id(chain_id)
+
     if not use_onchain_estimate:
         try:
             etherscan_gas_limit = estimate_gas_limit_from_recent_ccip(w3)
@@ -92,7 +101,7 @@ def send_ccip_transfer(to_address, dest_chain, amount,
         w3 = network_func(source_chain)
         fees = get_dynamic_gas_fees(w3) 
         max_fee_per_gas = fees["max_fee_per_gas"]
-        gas_limit_est = get_gas_limit_estimate(w3,source_chain, use_min=True, use_onchain_estimate=False)
+        gas_limit_est = get_gas_limit_estimate(w3, use_min=use_min, use_onchain_estimate=use_onchain_estimate)
         etherscan_estimate = ((gas_limit_est * max_fee_per_gas) / 1e18) * 1.25
         print(f'etherscan_estimate: {etherscan_estimate}')
         estimate = get_ccip_fee_estimate(
@@ -184,23 +193,7 @@ def send_ccip_transfer(to_address, dest_chain, amount,
 
     fees = get_dynamic_gas_fees(w3)
 
-    # if not use_onchain_estimate:
-    #     try:
-    #         etherscan_gas_limit = estimate_gas_limit_from_recent_ccip(w3)
-    #     except:
-    #         etherscan_gas_limit = None
-
-    #     dynamic_gas_limit = estimate_dynamic_gas(source_chain)
-
-    #     if etherscan_gas_limit is None:
-    #         gas_limit = dynamic_gas_limit
-    #     else:
-    #         etherscan_gas_limit = int(etherscan_gas_limit * 1.25)
-    #         gas_limit = min(etherscan_gas_limit, dynamic_gas_limit) if use_min else max(etherscan_gas_limit, dynamic_gas_limit)
-    # else:
-    #     gas_limit = estimate_dynamic_gas(source_chain)
-
-    gas_limit = get_gas_limit_estimate(w3,source_chain, use_min=True, use_onchain_estimate=False)
+    gas_limit = get_gas_limit_estimate(w3, use_min=use_min, use_onchain_estimate=use_onchain_estimate)
 
     max_fee_per_gas = fees["max_fee_per_gas"]
     max_priority = fees["max_priority_fee"]
@@ -346,12 +339,13 @@ def get_ccip_fee_estimate(
     use_onchain_estimate=False,
     account_obj = None
 ):
+    print(f'min_gas_threshold at get_ccip_fee_estimate: {min_gas_threshold}')
     if not account_obj:
         print(f'at estimate getting transfer data')
         w3 = network_func(source_chain)
         fees = get_dynamic_gas_fees(w3) 
         max_fee_per_gas = fees["max_fee_per_gas"]
-        gas_limit_est = get_gas_limit_estimate(w3,source_chain, use_min=use_min, use_onchain_estimate=use_onchain_estimate)
+        gas_limit_est = get_gas_limit_estimate(w3, use_min=use_min, use_onchain_estimate=use_onchain_estimate)
         etherscan_estimate = ((gas_limit_est * max_fee_per_gas) / 1e18) * 1.25
         print(f'etherscan_estimate: {etherscan_estimate}')
         transfer_data = prepare_transfer_data(
@@ -401,7 +395,7 @@ def get_ccip_fee_estimate(
 
     fees = get_dynamic_gas_fees(w3)
 
-    gas_limit = get_gas_limit_estimate(w3,source_chain, use_min=use_min, use_onchain_estimate=use_onchain_estimate)
+    gas_limit = get_gas_limit_estimate(w3, use_min=use_min, use_onchain_estimate=use_onchain_estimate)
 
     gas_fee = gas_limit * (fees['max_fee_per_gas'] if tx_type == 2 else fees['gas_price'])
     total = fee + gas_fee

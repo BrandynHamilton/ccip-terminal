@@ -18,7 +18,7 @@ import time
 import json
 
 from ccip_terminal.config import config
-from ccip_terminal.metadata import CHAIN_MAP, ROUTER_MAP, MAX_UINT256, GAS_LIMITS_BY_CHAIN
+from ccip_terminal.metadata import CHAIN_MAP, ROUTER_MAP, MAX_UINT256, GAS_LIMITS_BY_CHAIN,USDC_MAP
 from ccip_terminal.env import (ALCHEMY_API_KEY,INFURA_API_KEY)
 from ccip_terminal.logger import logger
 from ccip_terminal.network import resolve_chain_name
@@ -73,7 +73,7 @@ def load_abi():
 def clear_logs():
     with open(LOG_PATH, 'w'):
         pass
-    logger.info("🧹 Logs cleared.")
+    logger.info("Logs cleared.")
 
 def get_token_decimals(TOKEN_CONTRACTS,w3):
         
@@ -166,6 +166,7 @@ def calculate_usd_values(BALANCES_DICT, usdc_price):
     return BALANCES_DICT
 
 def get_largest_balance(BALANCES_DICT, account_obj=None, min_gas_threshold=0.003, exclude_chain=None):
+    print(f'min_gas_threshold at get_largest_balance: {min_gas_threshold}')
     max_wallet = None
     max_network = None
     max_usdc_balance = 0.0
@@ -187,7 +188,7 @@ def get_largest_balance(BALANCES_DICT, account_obj=None, min_gas_threshold=0.003
 
     if max_wallet:
         print(f"Wallet with highest USDC balance (gas OK, excluding '{exclude_chain}'): {max_wallet}")
-        print(f"Network: {max_network} | USDC: {max_usdc_balance}")
+        print(f"Network: {max_network} | USDC: {max_usdc_balance} | Gas: {native_balance}")
     else:
         print(f"No wallet met the gas threshold or destination exclusion {min_gas_threshold}.")
 
@@ -199,47 +200,78 @@ def get_largest_balance(BALANCES_DICT, account_obj=None, min_gas_threshold=0.003
     }
 
 def extract_token_decimals(token_data):
+    """
+    Extract token decimals from CoinGecko token data.
+    If token_data is None or missing expected structure, default to 6 decimals for all chains.
+
+    Args:
+        token_data (dict or None): Token metadata from CoinGecko.
+
+    Returns:
+        dict: Mapping of canonical chain names to decimal places (defaulting to 6).
+    """
+    if not token_data or not isinstance(token_data, dict):
+        return {chain: 6 for chain in CHAIN_MAP.keys()}
+
     token_decimals = {}
     detail_platforms = token_data.get("detail_platforms", {})
 
     if detail_platforms:
         for platform, platform_data in detail_platforms.items():
             try:
-                network = resolve_chain_name(platform)  # normalize to canonical chain name
+                network = resolve_chain_name(platform)
                 decimals = platform_data.get('decimal_place', 6)
                 token_decimals[network] = decimals
             except ValueError:
-                # Platform not in CHAIN_MAP — skip
                 continue
     else:
-        # Fallback to default decimals for all chains
         token_decimals = {chain: 6 for chain in CHAIN_MAP.keys()}
 
     return token_decimals
 
 def extract_token_contracts(token_data):
+    """
+    Extract token contract addresses from CoinGecko token data.
+    If token_data is None or missing expected structure, fallback to USDC_MAP.
+
+    Args:
+        token_data (dict or None): Token metadata from CoinGecko.
+
+    Returns:
+        dict: Mapping of canonical chain names to contract addresses.
+    """
+    if not token_data or not isinstance(token_data, dict):
+        return USDC_MAP.copy()  # ensure you don't return a reference to the original dict
+
     token_contracts = {}
 
-    for platform, contract_address in token_data.get("platforms", {}).items():
+    platforms = token_data.get("platforms", {})
+    if not platforms:
+        return USDC_MAP.copy()
+
+    for platform, contract_address in platforms.items():
         try:
             network = resolve_chain_name(platform)
             token_contracts[network] = contract_address
         except ValueError:
-            # Platform not supported in CHAIN_MAP
             continue
+
+    # Fallback to USDC_MAP for any missing chains
+    for chain, default_address in USDC_MAP.items():
+        token_contracts.setdefault(chain, default_address)
 
     return token_contracts
 
 def check_ccip_lane(router, dest_selector):
     is_supported = router.functions.isChainSupported(dest_selector).call()
     if not is_supported:
-        raise Exception(f"❌ No outbound lane configured to dest selector: {dest_selector}")
+        raise Exception(f"No outbound lane configured to dest selector: {dest_selector}")
 
 def check_offramp(router, dest_selector):
     offramps = router.functions.getOffRamps().call()
     valid = any(o[0] == dest_selector for o in offramps)
     if not valid:
-        raise Exception(f"❌ No active OffRamp for selector {dest_selector}. CCIP transfer will fail.")
+        raise Exception(f"No active OffRamp for selector {dest_selector}. CCIP transfer will fail.")
 
 def approve_token_if_needed(token_address, 
                             spender, 
@@ -328,49 +360,82 @@ def estimate_dynamic_gas(chain_name,
     fallback = GAS_LIMITS_BY_CHAIN.get(chain_name.lower(), default_gas)
     fallback = max(default_gas,fallback)
     gas_limit = int(fallback * buffer)
-    # try:
-    #     estimated = router.functions.ccipSend(dest_selector, message).estimate_gas({'from': account})
-    #     gas_limit = int(estimated * buffer)
-    #     if gas_limit > max_gas:
-    #         logger.warning(f"⚠️ Gas limit estimate ({gas_limit}) exceeds max cap ({max_gas}). Using cap.")
-    #         gas_limit = max_gas
-    #     logger.info(f"✅ Estimated Gas: {estimated}, with buffer: {gas_limit}")
-    #     return gas_limit
-    # except Exception as e:
-    #     logger.warning(f"⚠️ Gas estimation failed, fallback used. Reason: {e}")
+
     return int(gas_limit)
 
-def get_dynamic_gas_fees(w3, default_priority_gwei=5):
+def get_dynamic_gas_fees(
+    w3,
+    default_priority_gwei: float = 2,
+    history_blocks: int = 5,
+    reward_pct: int = 50,
+) -> dict:
     """
     Estimate dynamic gas fee parameters using Web3.
 
-    Args:
-        w3: A Web3 instance.
-        tx_type (int): 2 = EIP-1559, 0 = legacy.
-        default_priority_gwei (int): Fallback priority fee if none available.
-
-    Returns:
-        dict: Gas fee settings for a transaction.
+    Returns a dict with:
+      - base_fee           (wei)
+      - max_priority_fee   (wei)
+      - max_fee_per_gas    (wei)
+      - gas_price          (wei)  # legacy fallback
     """
-    latest_block = w3.eth.get_block("latest")
-    base_fee = latest_block.get("baseFeePerGas", 0)
+    # 1) Base fee from latest block
+    latest = w3.eth.get_block("latest")
+    base_fee = latest.get("baseFeePerGas", 0)
 
-    # maxPriorityFee is not always exposed
-    try:
-        suggested_priority = getattr(w3.eth, 'max_priority_fee', None)
-        if callable(suggested_priority):
-            priority_fee = suggested_priority()
-        else:
-            priority_fee = w3.to_wei(default_priority_gwei, "gwei")
-    except Exception:
+    # 2) Node‐suggested tip (method or attr)
+    raw = getattr(w3.eth, "max_priority_fee", None)
+    if callable(raw):
+        priority_fee = raw()
+    elif isinstance(raw, int):
+        priority_fee = raw
+    else:
         priority_fee = w3.to_wei(default_priority_gwei, "gwei")
+
+    # 3) Historical percentile tip
+    hist = w3.eth.fee_history(history_blocks, "latest", [reward_pct])
+    hist_tip = int(hist["reward"][-1][0])
+    priority_fee = max(priority_fee, hist_tip)
+
+    # 4) Buffer to cover up to +12.5% baseFee increase
+    buffer = int(base_fee * 0.125)
 
     return {
         "base_fee": base_fee,
         "max_priority_fee": priority_fee,
-        "max_fee_per_gas": base_fee + priority_fee,
+        "max_fee_per_gas": base_fee + priority_fee + buffer,
         "gas_price": w3.eth.gas_price
     }
+
+# def get_dynamic_gas_fees(w3, default_priority_gwei=1.5):
+#     """
+#     Estimate dynamic gas fee parameters using Web3.
+
+#     Args:
+#         w3: A Web3 instance.
+#         tx_type (int): 2 = EIP-1559, 0 = legacy.
+#         default_priority_gwei (int): Fallback priority fee if none available.
+
+#     Returns:
+#         dict: Gas fee settings for a transaction.
+#     """
+#     latest_block = w3.eth.get_block("latest")
+#     base_fee = latest_block.get("baseFeePerGas", 0)
+
+#     raw = getattr(w3.eth, "max_priority_fee", None)
+#     if callable(raw):
+#         priority_fee = raw()
+#     elif isinstance(raw, int):
+#         priority_fee = raw
+#     else:
+#         # fallback if your node doesn’t support it
+#         priority_fee = w3.to_wei(default_priority_gwei, "gwei")
+
+#     return {
+#         "base_fee": base_fee,
+#         "max_priority_fee": priority_fee,
+#         "max_fee_per_gas": base_fee + priority_fee,
+#         "gas_price": w3.eth.gas_price
+#     }
 
 def generate_explorer_links(chain_name, tx_hash, message_id=None, w3=None):
     """
@@ -452,15 +517,15 @@ def generate_explorer_links(chain_name, tx_hash, message_id=None, w3=None):
 #         estimated = router.functions.ccipSend(dest_selector, message).estimate_gas({'from': account})
 #         gas_limit = int(estimated * buffer)
 #         if gas_limit > max_gas:
-#             logger.warning(f"⚠️ Gas limit estimate ({gas_limit}) exceeds max cap ({max_gas}). Using cap.")
+#             logger.warning(f"Gas limit estimate ({gas_limit}) exceeds max cap ({max_gas}). Using cap.")
 #             gas_limit = max_gas
-#         logger.info(f"✅ Estimated Gas: {estimated}, with buffer: {gas_limit}")
+#         logger.info(f"Estimated Gas: {estimated}, with buffer: {gas_limit}")
 #         return gas_limit
 
 #     except Exception as e:
 #         fallback = GAS_LIMITS_BY_CHAIN.get(chain_name.lower(), default_gas)
 #         gas_limit = int(fallback * buffer)
-#         logger.warning(f"⚠️ Gas estimation failed. Using static fallback for {chain_name}: {gas_limit}. Reason: {e}")
+#         logger.warning(f"Gas estimation failed. Using static fallback for {chain_name}: {gas_limit}. Reason: {e}")
 #         return gas_limit
 
 

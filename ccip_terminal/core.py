@@ -116,7 +116,7 @@ def batch_transfer(batch_file, source_network=None, account_index=None, track_me
             logger.error(f"Transfer failed for {to_address} | Error: {e}")
 
         if not sender_found:
-            logger.warning(f"❌ No sender found with sufficient balance/gas for {amount} USDC to {to_address}")
+            logger.warning(f"No sender found with sufficient balance/gas for {amount} USDC to {to_address}")
 
     if track_messages and tracked_messages:
         track_ccip_messages(

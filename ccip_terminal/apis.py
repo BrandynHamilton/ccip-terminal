@@ -17,35 +17,34 @@ def token_data(id='usd-coin', network=None, contract_address=None, timeout=10):
         timeout (int): Timeout for the API request in seconds.
 
     Returns:
-        dict: Token data from CoinGecko.
-
-    Raises:
-        ValueError: If required parameters are missing or invalid.
-        RuntimeError: For HTTP/network errors or invalid API responses.
+        dict or None: Token data from CoinGecko, or None if the request fails.
     """
     if id:
         url = f"https://api.coingecko.com/api/v3/coins/{id}"
     elif network and contract_address:
         url = f"https://api.coingecko.com/api/v3/coins/{network}/contract/{contract_address}"
     else:
-        raise ValueError("Either `id` OR both `network` and `contract_address` must be provided.")
+        print("Either `id` OR both `network` and `contract_address` must be provided.")
+        return None
 
     headers = {
         "accept": "application/json"
     }
 
-    # Include API key in headers if available
     if COINGECKO_API_KEY:
         headers["x-cg-demo-api-key"] = COINGECKO_API_KEY
 
     try:
         response = requests.get(url, headers=headers, timeout=timeout)
-        response.raise_for_status()  # Raises HTTPError for bad status codes
+        response.raise_for_status()
         data = response.json()
         if not isinstance(data, dict):
-            raise ValueError("Invalid response format.")
+            print("Invalid response format.")
+            return None
         return data
     except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Failed to fetch token data: {e}")
+        print(f"Request error while fetching token data: {e}")
+        return None
     except ValueError as e:
-        raise RuntimeError(f"Invalid API response: {e}")
+        print(f"Parsing error while fetching token data: {e}")
+        return None

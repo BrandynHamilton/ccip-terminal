@@ -464,3 +464,107 @@
 2025-04-09 19:29:21,858 - ERROR - TX Failed inside try_send_tx: ('TX failed with status=0', {'tx_hash': 'd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516', 'links': {'source_url': 'https://arbitrum.blockscout.com/tx/0xd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516', 'ccip_url': 'https://ccip.chain.link/#/side-drawer/msg/0x3a08916be235237ff359dc7b6e6b38b4d9a2aa9b051d0c2924ebe1eff59e89c1'}})
 2025-04-09 19:29:21,859 - ERROR - Final failure (tx_type=2): ('TX failed with status=0', {'tx_hash': 'd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516', 'links': {'source_url': 'https://arbitrum.blockscout.com/tx/0xd789b345a5274c5a4014cbe61cfd9f15f46164e76b2de813691529d6e1233516', 'ccip_url': 'https://ccip.chain.link/#/side-drawer/msg/0x3a08916be235237ff359dc7b6e6b38b4d9a2aa9b051d0c2924ebe1eff59e89c1'}})
 2025-04-14 20:16:32,570 - INFO - CCIP messageId (pre-send): cf8cae4e57dc905844ae2ee0d349193536c620c12c79280a34be37ca75dfc902
+2025-04-15 19:16:02,988 - INFO - Account Data: {
+  "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84": {
+    "ethereum": {
+      "usdc": 0.00979,
+      "native_token": 4.132747937321e-06,
+      "usd_balance": 0.00979
+    },
+    "optimism": {
+      "usdc": 4.0,
+      "native_token": 0.001397223622087085,
+      "usd_balance": 3.999796
+    },
+    "avalanche": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999949
+    },
+    "arbitrum": {
+      "usdc": 3.111942,
+      "native_token": 0.00359496709390802,
+      "usd_balance": 3.111783
+    },
+    "polygon": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999949
+    },
+    "base": {
+      "usdc": 0.0,
+      "native_token": 0.00023279516747301,
+      "usd_balance": 0.0
+    }
+  },
+  "0x58a4Cae5e8dDA3a5614972F34951e482a29ef0f0": {
+    "ethereum": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "optimism": {
+      "usdc": 0.0,
+      "native_token": 0.0005,
+      "usd_balance": 0.0
+    },
+    "avalanche": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "arbitrum": {
+      "usdc": 0.0,
+      "native_token": 9.9904924548e-05,
+      "usd_balance": 0.0
+    },
+    "polygon": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "base": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    }
+  },
+  "TOTAL USD VALUE": {
+    "by_network": {
+      "ethereum": 0.01,
+      "optimism": 4.0,
+      "avalanche": 1.0,
+      "arbitrum": 3.11,
+      "polygon": 1.0,
+      "base": 0.0
+    },
+    "total_usd": 9.12
+  },
+  "largest_balance_dict": {
+    "max_wallet": "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84",
+    "max_network": "optimism",
+    "max_usdc_balance": 4.0,
+    "account_index": 0
+  }
+}
+2025-04-15 19:16:02,991 - INFO - Largest Balance Info: {'max_wallet': '0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84', 'max_network': 'optimism', 'max_usdc_balance': 4.0, 'account_index': 0}
+2025-04-15 22:32:11,933 - INFO - Running batch transfer from file: data/batch_transfer.json
+2025-04-15 22:32:29,724 - ERROR - Transfer failed for 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 | Error: '>=' not supported between instances of 'NoneType' and 'float'
+2025-04-15 22:32:29,725 - WARNING - No sender found with sufficient balance/gas for 1.0 USDC to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84
+2025-04-15 22:33:09,574 - INFO - Running batch transfer from file: data/batch_transfer.json
+2025-04-15 22:33:49,257 - INFO - CCIP messageId (pre-send): 8b159d80c2e36147b76afebcb6de5e9a0c12eca9e2ab38b08224b2e27673eacd
+2025-04-15 22:33:50,708 - INFO - Sent 1.0 USDC to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 | TX: 510b77473deec50efd86784a3a26c295ef42275c6521fb750ffdb2a8fe9b13cf | ID: 0x8b159d80c2e36147b76afebcb6de5e9a0c12eca9e2ab38b08224b2e27673eacd
+2025-04-15 22:34:06,791 - ERROR - Transfer failed for 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 | Error: None
+2025-04-15 22:34:06,792 - WARNING - No sender found with sufficient balance/gas for 1.0 USDC to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84
+2025-04-15 22:34:48,058 - INFO - CCIP messageId (pre-send): 8ff42cf1212e4bc50e0cbe931a41c06112bdb3166b09e82a4f63b84d7db7b7fb
+2025-04-15 22:34:49,660 - INFO - Sent 1.0 USDC to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 | TX: bd73f7466d0ed2564531a9953d2c19c15209fcc53c86d1a9afe4fb7fac7f6f41 | ID: 0x8ff42cf1212e4bc50e0cbe931a41c06112bdb3166b09e82a4f63b84d7db7b7fb
+2025-04-15 22:56:56,498 - INFO - Message ID 0x8b159d80c2e36147b76afebcb6de5e9a0c12eca9e2ab38b08224b2e27673eacd | Status: SUCCESS | OffRamp: 0xeb3d6956bcf7b1e29634c8cd182fc9fa740bce34
+2025-04-15 22:56:56,808 - INFO - Message ID 0x8ff42cf1212e4bc50e0cbe931a41c06112bdb3166b09e82a4f63b84d7db7b7fb | Status: SUCCESS | OffRamp: 0x7d38c6363d5e4dfd500a691bc34878b383f58d93
+2025-04-15 22:58:03,558 - INFO - Using address book entry for 'ccip_terminal': 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84
+2025-04-15 22:58:03,559 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-16 00:00:41,611 - INFO - Using address book entry for 'ccip_terminal': 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84
+2025-04-16 00:00:41,611 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-04-16 00:01:20,817 - INFO - CCIP messageId (pre-send): b3d163f9c6390c9c95e2cbdf6d796b436e143d56fffecdfd95349f41022e5e6e
+2025-04-16 00:01:22,310 - INFO - CCIP Transfer Submitted: 07af51b3b8f569cca3097d45eb0d3f257d30627fd26bb4ab0572585a2534dd18, Message ID: 0xb3d163f9c6390c9c95e2cbdf6d796b436e143d56fffecdfd95349f41022e5e6e
+2025-04-17 00:23:22,853 - INFO - CCIP messageId (pre-send): af20c0f6d854d201f36e481e2954e973bdd69d786815578c99844b6b66fb8ee2
+2025-04-17 00:37:30,993 - INFO - CCIP messageId (pre-send): 67b82e4146ddbeb908809389d8d3bcd24e6e6687f18f6b69a671b4b5a30f1531

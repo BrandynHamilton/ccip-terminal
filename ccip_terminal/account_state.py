@@ -60,7 +60,7 @@ def prepare_transfer_data(dest_chain, source_chain=None, account_index=None, acc
     Dynamically selects account_index and source_chain if not provided.
     Always returns a single account object (with .w3) for the selected source_chain.
     """
-    print(f'at prepare transfer data')
+    print(f'min_gas_threshold at prepare transfer data: {min_gas_threshold}')
 
     # Load USDC metadata
     # Load USDC metadata
@@ -116,16 +116,22 @@ def prepare_transfer_data(dest_chain, source_chain=None, account_index=None, acc
                 min_gas_threshold=min_gas_threshold,
                 exclude_chain=dest_chain
             )
+
+            if not largest_balance_dict.get("max_network"):
+                raise RuntimeError("Unable to determine source chain: no account met gas threshold or balance criteria.")
+
             if account_index is None:
-                account_index = largest_balance_dict['account_index']
-            if source_chain is None:
-                source_chain = largest_balance_dict['max_network']
+                account_index = largest_balance_dict.get("account_index", 0)
+
+            source_chain = largest_balance_dict.get("max_network")
+
         if account_index is None:
             account_index = 0
 
         # Load selected account with network context
         account_data = load_accounts(network=source_chain, account_index=account_index)
         account_obj = account_data[0]  # single dict with 'account' and 'w3'
+
 
     return {
         "balances": BALANCES_DICT,
