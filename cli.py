@@ -10,7 +10,6 @@ from ccip_terminal.notifications import send_email_notification
 from ccip_terminal.logger import logger
 from ccip_terminal.wallet import generate_wallet, save_to_env, encrypt_keystore
 
-from scheduler import schedule_ccip_transfer, start_scheduler_server
 
 import sys
 if sys.stdout.encoding.lower() != 'utf-8':
@@ -186,6 +185,8 @@ def ccip_status(message_id, dest_chain, wait, timeout,interval,max_retries=120):
 @click.option('--cron', required=True, help='Cron schedule (e.g. "0 9 * * *")')
 def schedule_transfer(to, amount, dest, source, account_index, cron):
     """Schedule a CCIP transfer."""
+    from scheduler import schedule_ccip_transfer, start_scheduler_server
+
     schedule_ccip_transfer(to, amount, dest, source, account_index, cron)
     start_scheduler_server()
 

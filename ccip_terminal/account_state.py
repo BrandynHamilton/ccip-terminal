@@ -90,15 +90,11 @@ def prepare_transfer_data(dest_chain, source_chain=None, account_index=None, acc
             account_index = 0  # fallback
     else:
         # CLI-style usage
-        print(f'no account obj')
         if source_chain is not None:
             account_obj_list = load_accounts(network=source_chain,account_index=account_index)
         else:
             account_obj_list = load_accounts(account_index=account_index)
     
-    print(f'account_obj_list: {account_obj_list}')
-
-    print(f'at get balances')
     # Get balances
     BALANCES_DICT = get_all_balances_simple(
         TOKEN_CONTRACTS,

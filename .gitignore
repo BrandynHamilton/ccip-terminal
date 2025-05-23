@@ -7,3 +7,8 @@ pyproject.toml
 build
 dist
 chartengineer_env
+uv.lock
+.venv
+*.ipynb
+*.ipynb_checkpoints
+requirements.txt

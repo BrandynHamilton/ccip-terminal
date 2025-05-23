@@ -241,13 +241,13 @@ def extract_token_contracts(token_data):
         dict: Mapping of canonical chain names to contract addresses.
     """
     if not token_data or not isinstance(token_data, dict):
-        return USDC_MAP.copy()  # ensure you don't return a reference to the original dict
+        dict(USDC_MAP).copy()  # ensure you don't return a reference to the original dict
 
     token_contracts = {}
 
     platforms = token_data.get("platforms", {})
     if not platforms:
-        return USDC_MAP.copy()
+        dict(USDC_MAP).copy()
 
     for platform, contract_address in platforms.items():
         try:
@@ -399,10 +399,12 @@ def get_dynamic_gas_fees(
     # 4) Buffer to cover up to +12.5% baseFee increase
     buffer = int(base_fee * 0.125)
 
+    max_fee_per_gas = max(base_fee + priority_fee + buffer, base_fee + priority_fee)
+
     return {
         "base_fee": base_fee,
         "max_priority_fee": priority_fee,
-        "max_fee_per_gas": base_fee + priority_fee + buffer,
+        "max_fee_per_gas": max_fee_per_gas,
         "gas_price": w3.eth.gas_price
     }
 

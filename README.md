@@ -9,19 +9,21 @@ For now the package **only supports USDC**; other currencies will be added later
 ## Installation
 
 ```bash
-pip install -e .[all]
+# Install via uv
+pip install uv  # Only if not already installed
+uv pip install -e .[all] # For both core and scheduler packages
 
-pip install ccip-terminal
-pip install ccip-terminal[fiat-ramps]
-pip install ccip-terminal[scheduler]
-pip install ccip-terminal[all]
+# By name
+uv pip install ccip-terminal
+uv pip install ccip-terminal[scheduler]
+uv pip install ccip-terminal[all]
 
 ```
 
 ## CLI Usage
 
 ```bash
-python cli.py [COMMAND] [OPTIONS]
+uv run python cli.py [COMMAND] [OPTIONS]
 ```
 
 ## Commands
@@ -41,7 +43,6 @@ Send a USDC transfer via Chainlink CCIP.
 | `--batch-file`    | (optional) Path to batch JSON or CSV file   |
 | `--account-index` | (optional) Account index to use             |
 | `--notify-email`  | (optional) Email address to notify          |
-| `--notify-sms`    | (optional) SMS number to notify             |
 
 #### Examples
 
@@ -77,29 +78,7 @@ Check the status of a CCIP message.
 
 ```bash
 python cli.py ccip-status --message-id 0xabc... --dest-chain optimism
-```
-
----
-
-### fiat-onramp
-
-Create a Transak fiat-onramp session.
-
-#### Options
-
-| Option            | Description                     |
-| ----------------- | ------------------------------- |
-| `--wallet`        | Wallet address to receive funds |
-| `--amount`        | Fiat amount in USD              |
-| `--network`       | (optional) Target network       |
-| `--purchase-type` | USDC or gas token               |
-| `--with-webhook`  | (optional) Run webhook listener |
-
-#### Example
-
-```bash
-python cli.py fiat-onramp --wallet 0xabc... --amount 100
-```
+```  
 
 ---
 
@@ -179,20 +158,19 @@ COINGECKO_API_KEY =
 ALCHEMY_API_KEY =
 INFURA_API_KEY =
 NOTIFY_EMAIL =
-NOTIFY_PHONE =
 ETHERSCAN_API_KEY =
 SMTP_SERVER=
 SMTP_PORT=587
 SMTP_USER=
 SMTP_PASSWORD=
-TWILIO_ACCOUNT_SID=
-TWILIO_AUTH_TOKEN=
-TWILIO_PHONE_NUMBER=
-TRANSAK_API_KEY=
 ```
 
-## INFURA_API_KEY is the only required variable.
+## INFURA_API_KEY is the only required variable, but ETHERSCAN_API_KEY is also reccomended for accurate gas estimation.
 
 ## License
 
 MIT License
+
+## Contact Info
+
+- [brandynhamilton@gmail.com](mailto:brandynhamilton@gmail.com)

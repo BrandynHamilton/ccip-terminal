@@ -14,7 +14,7 @@ def schedule_ccip_transfer(wallet, amount, dest_chain, source_chain, account_ind
     Schedule a CCIP transfer.
     """
     def job():
-        print(f"🚀 Scheduled CCIP transfer: {amount} USDC → {dest_chain} → {wallet}")
+        print(f"Scheduled CCIP transfer: {amount} USDC → {dest_chain} → {wallet}")
         receipt, links, success, message_id = send_ccip_transfer(to_address=wallet, dest_chain=dest_chain, amount=amount, 
                                     source_chain=source_chain, account_index=account_index)
         if success:
@@ -35,7 +35,7 @@ def schedule_ccip_transfer(wallet, amount, dest_chain, source_chain, account_ind
         "cron": cron_expr,
         "job_id": job_ref.id
     })
-    print(f"📅 Transfer scheduled: {wallet}, {amount}, {dest_chain}, cron: {cron_expr}")
+    print(f"Transfer scheduled: {wallet}, {amount}, {dest_chain}, cron: {cron_expr}")
 
 def start_scheduler_server():
     """

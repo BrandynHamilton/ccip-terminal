@@ -568,3 +568,137 @@
 2025-04-16 00:01:22,310 - INFO - CCIP Transfer Submitted: 07af51b3b8f569cca3097d45eb0d3f257d30627fd26bb4ab0572585a2534dd18, Message ID: 0xb3d163f9c6390c9c95e2cbdf6d796b436e143d56fffecdfd95349f41022e5e6e
 2025-04-17 00:23:22,853 - INFO - CCIP messageId (pre-send): af20c0f6d854d201f36e481e2954e973bdd69d786815578c99844b6b66fb8ee2
 2025-04-17 00:37:30,993 - INFO - CCIP messageId (pre-send): 67b82e4146ddbeb908809389d8d3bcd24e6e6687f18f6b69a671b4b5a30f1531
+2025-05-21 19:29:40,521 - INFO - Account Data: {
+  "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84": {
+    "ethereum": {
+      "usdc": 0.00979,
+      "native_token": 0.004986857562247321,
+      "usd_balance": 0.009788
+    },
+    "arbitrum": {
+      "usdc": 6.111942,
+      "native_token": 0.00352022997077261,
+      "usd_balance": 6.110707
+    },
+    "optimism": {
+      "usdc": 0.0,
+      "native_token": 0.000582320858697672,
+      "usd_balance": 0.0
+    },
+    "base": {
+      "usdc": 1.0,
+      "native_token": 0.00023279516747301,
+      "usd_balance": 0.999798
+    },
+    "avalanche": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999798
+    },
+    "polygon": {
+      "usdc": 1.0,
+      "native_token": 0.0,
+      "usd_balance": 0.999798
+    }
+  },
+  "0x58a4Cae5e8dDA3a5614972F34951e482a29ef0f0": {
+    "ethereum": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "arbitrum": {
+      "usdc": 0.0,
+      "native_token": 9.9904924548e-05,
+      "usd_balance": 0.0
+    },
+    "optimism": {
+      "usdc": 0.0,
+      "native_token": 0.0005,
+      "usd_balance": 0.0
+    },
+    "base": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "avalanche": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    },
+    "polygon": {
+      "usdc": 0.0,
+      "native_token": 0.0,
+      "usd_balance": 0.0
+    }
+  },
+  "TOTAL USD VALUE": {
+    "by_network": {
+      "ethereum": 0.01,
+      "arbitrum": 6.11,
+      "optimism": 0.0,
+      "base": 1.0,
+      "avalanche": 1.0,
+      "polygon": 1.0
+    },
+    "total_usd": 9.12
+  },
+  "largest_balance_dict": {
+    "max_wallet": "0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84",
+    "max_network": "arbitrum",
+    "max_usdc_balance": 6.111942,
+    "account_index": 0
+  }
+}
+2025-05-21 19:29:40,525 - INFO - Largest Balance Info: {'max_wallet': '0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84', 'max_network': 'arbitrum', 'max_usdc_balance': 6.111942, 'account_index': 0}
+2025-05-21 19:30:59,691 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 19:31:43,896 - INFO - CCIP messageId (pre-send): b7c822abc7f60fee103f9dc62b0d3e4d2e06c8a4d243b5840a11a68e5e78f143
+2025-05-21 19:31:44,744 - WARNING - TX 94dab352b6452776f2ede6a83d904a2cb1ae56e6610665ea0cb6d76f87a5372c mined but failed. Check: https://arbitrum.blockscout.com/tx/0x94dab352b6452776f2ede6a83d904a2cb1ae56e6610665ea0cb6d76f87a5372c
+2025-05-21 19:31:44,857 - WARNING - Revert reason: 'AttributeDict' object has no attribute 'copy'
+2025-05-21 19:31:44,858 - ERROR - TX Failed inside try_send_tx. TX Hash: 94dab352b6452776f2ede6a83d904a2cb1ae56e6610665ea0cb6d76f87a5372c | Links: {'source_url': 'https://arbitrum.blockscout.com/tx/0x94dab352b6452776f2ede6a83d904a2cb1ae56e6610665ea0cb6d76f87a5372c', 'ccip_url': 'https://ccip.chain.link/#/side-drawer/msg/0xb7c822abc7f60fee103f9dc62b0d3e4d2e06c8a4d243b5840a11a68e5e78f143'}
+2025-05-21 19:31:44,858 - ERROR - TX Failed inside try_send_tx: TX failed with status=0
+2025-05-21 19:31:44,858 - WARNING - TX failed: TX failed with status=0
+2025-05-21 19:31:44,858 - INFO - Retrying with fallback gas estimate using onchain estimator...
+2025-05-21 19:31:47,906 - INFO - CCIP messageId (pre-send): b7c822abc7f60fee103f9dc62b0d3e4d2e06c8a4d243b5840a11a68e5e78f143
+2025-05-21 19:31:48,675 - INFO - CCIP Transfer Submitted: c5582f695e037edd015e2b30473c4adc70e1456f0906115467aba2efa0b4dfe3, Message ID: 0xb7c822abc7f60fee103f9dc62b0d3e4d2e06c8a4d243b5840a11a68e5e78f143
+2025-05-21 20:04:39,512 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:05:24,846 - INFO - CCIP messageId (pre-send): 0d3b587a534b16ee8c6cdaa7ec86a1fb8802617f0f2fbb3c4f17cda3cdb1a5af
+2025-05-21 20:05:25,993 - WARNING - TX ce149ae9b21e51c46a189b167f981127df01e409574cb784c0c371cfd9efe2bd mined but failed. Check: https://arbitrum.blockscout.com/tx/0xce149ae9b21e51c46a189b167f981127df01e409574cb784c0c371cfd9efe2bd
+2025-05-21 20:05:26,109 - WARNING - Revert reason: 'AttributeDict' object has no attribute 'copy'
+2025-05-21 20:05:26,110 - ERROR - TX Failed inside try_send_tx. TX Hash: ce149ae9b21e51c46a189b167f981127df01e409574cb784c0c371cfd9efe2bd | Links: {'source_url': 'https://arbitrum.blockscout.com/tx/0xce149ae9b21e51c46a189b167f981127df01e409574cb784c0c371cfd9efe2bd', 'ccip_url': 'https://ccip.chain.link/#/side-drawer/msg/0x0d3b587a534b16ee8c6cdaa7ec86a1fb8802617f0f2fbb3c4f17cda3cdb1a5af'}
+2025-05-21 20:05:26,110 - ERROR - TX Failed inside try_send_tx: TX failed with status=0
+2025-05-21 20:05:26,110 - WARNING - TX failed: TX failed with status=0
+2025-05-21 20:05:26,111 - INFO - Retrying with fallback gas estimate using onchain estimator...
+2025-05-21 20:05:29,202 - INFO - CCIP messageId (pre-send): 0d3b587a534b16ee8c6cdaa7ec86a1fb8802617f0f2fbb3c4f17cda3cdb1a5af
+2025-05-21 20:05:29,958 - INFO - CCIP Transfer Submitted: 60f7273cb235f4ed10613f0e899ebba9b09c8fd7f38ddd7101c5a0487ff7a283, Message ID: 0x0d3b587a534b16ee8c6cdaa7ec86a1fb8802617f0f2fbb3c4f17cda3cdb1a5af
+2025-05-21 20:06:31,694 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:07:16,477 - INFO - CCIP messageId (pre-send): d5ac085c0a5bb3b047fcc3172dd36410caa3b871bd6b260d74224a80eb8074f8
+2025-05-21 20:07:17,296 - WARNING - TX abcfa914ee7324602d0773ab3c1fd0e3432fe31cd5d36a3c61df6299f4e87c86 mined but failed. Check: https://arbitrum.blockscout.com/tx/0xabcfa914ee7324602d0773ab3c1fd0e3432fe31cd5d36a3c61df6299f4e87c86
+2025-05-21 20:07:17,420 - WARNING - Revert reason: 'AttributeDict' object has no attribute 'copy'
+2025-05-21 20:07:17,420 - ERROR - TX Failed inside try_send_tx. TX Hash: abcfa914ee7324602d0773ab3c1fd0e3432fe31cd5d36a3c61df6299f4e87c86 | Links: {'source_url': 'https://arbitrum.blockscout.com/tx/0xabcfa914ee7324602d0773ab3c1fd0e3432fe31cd5d36a3c61df6299f4e87c86', 'ccip_url': 'https://ccip.chain.link/#/side-drawer/msg/0xd5ac085c0a5bb3b047fcc3172dd36410caa3b871bd6b260d74224a80eb8074f8'}
+2025-05-21 20:07:17,421 - ERROR - TX Failed inside try_send_tx: TX failed with status=0
+2025-05-21 20:07:17,421 - WARNING - TX failed: TX failed with status=0
+2025-05-21 20:07:17,421 - INFO - Retrying with fallback gas estimate using onchain estimator...
+2025-05-21 20:07:20,450 - INFO - CCIP messageId (pre-send): d5ac085c0a5bb3b047fcc3172dd36410caa3b871bd6b260d74224a80eb8074f8
+2025-05-21 20:07:21,218 - INFO - CCIP Transfer Submitted: 3d2c941d64a10406e27e2927da6362c7cbe537676fb019aa103985868646f8f4, Message ID: 0xd5ac085c0a5bb3b047fcc3172dd36410caa3b871bd6b260d74224a80eb8074f8
+2025-05-21 20:16:28,974 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:18:05,473 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:21:46,988 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:23:15,335 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:35:28,976 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:37:13,103 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:38:09,034 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:38:41,477 - INFO - CCIP messageId (pre-send): 33a0948fa468f72907242193765c2db5fdf6c5294704d09dfefccf4ae2e91454
+2025-05-21 20:38:41,613 - ERROR - TX Failed inside try_send_tx: {'code': -32000, 'message': 'max fee per gas less than block base fee: address 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84, maxFeePerGas: 23575500 baseFee: 24879000'}
+2025-05-21 20:38:41,613 - WARNING - TX failed: {'code': -32000, 'message': 'max fee per gas less than block base fee: address 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84, maxFeePerGas: 23575500 baseFee: 24879000'}
+2025-05-21 20:38:41,614 - INFO - Retrying with fallback gas estimate using onchain estimator...
+2025-05-21 20:38:44,780 - INFO - CCIP messageId (pre-send): 33a0948fa468f72907242193765c2db5fdf6c5294704d09dfefccf4ae2e91454
+2025-05-21 20:38:45,688 - INFO - CCIP Transfer Submitted: fa6fd8d7ce9c017e2bf4e4e6e84718631e7958d0d0ae882a646ac0e82435a536, Message ID: 0x33a0948fa468f72907242193765c2db5fdf6c5294704d09dfefccf4ae2e91454
+2025-05-21 20:47:53,899 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-21 20:48:25,887 - INFO - CCIP messageId (pre-send): 8d0e94906ca247da3a721a7f19664535add6c4a5c280f1870a43dae2cc4ccdd5
+2025-05-21 20:48:26,597 - INFO - CCIP Transfer Submitted: c0c43b12c2e48522ff36be9f32d554922f45817875470708d194f9c42f13264d, Message ID: 0x8d0e94906ca247da3a721a7f19664535add6c4a5c280f1870a43dae2cc4ccdd5
+2025-05-21 21:30:05,684 - INFO - CCIP messageId (pre-send): 2fa75aa16b0d7f00e2b60a2439522770052def6de12cbebd6eeda6b1880705c7
+2025-05-23 00:05:11,242 - INFO - Sending single transfer to 0x38979DFdB5d8FD76FAD4E797c4660e20015C6a84 on optimism
+2025-05-23 00:05:58,436 - INFO - CCIP messageId (pre-send): fc8fb8b5c2ff806dbbd5de4d719317ba23bf5c0106463a726f148c8335b446b7
+2025-05-23 00:05:59,770 - INFO - CCIP Transfer Submitted: 7dc8ae5466c3afdfb900a837d3cc97fec251e6b4fd8ba055d550143646b61bde, Message ID: 0xfc8fb8b5c2ff806dbbd5de4d719317ba23bf5c0106463a726f148c8335b446b7

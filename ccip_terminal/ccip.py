@@ -55,16 +55,15 @@ def get_gas_limit_estimate(w3, use_min=True, use_onchain_estimate=False):
     return gas_limit
 
 def build_ccip_message(receiver, token_address, amount, token_decimals, 
-                       fee_token, gas_limit=200_000):
+                       fee_token, gas_limit=200_000, data=b''):
     amount_wei = int(amount * (10 ** token_decimals))
     evm_extra_args_v1_tag = keccak(text="CCIP EVMExtraArgsV1")[:4]
     extra_args = encode(['uint256'], [gas_limit])
     extra_args_encoded = evm_extra_args_v1_tag + extra_args
 
-    # Correctly build the message dict (Solidity struct)
     message = {
         "receiver": encode(['address'], [to_checksum_address(receiver)]),
-        "data": b'',
+        "data": data,
         "tokenAmounts": [{"token": to_checksum_address(token_address), "amount": amount_wei}],
         "feeToken": to_checksum_address(fee_token),
         "extraArgs": extra_args_encoded
@@ -96,25 +95,37 @@ def send_ccip_transfer(to_address, dest_chain, amount,
         TOKEN_CONTRACTS, TOKEN_DECIMALS = get_usdc_data(get_balance_data=False)[1:3]
 
     # === Estimate gas + fee if not provided ===
-    if estimate is None and source_chain is None:
+    if estimate is None and source_chain is None and account_obj is None:
         print(f'getting estimate')
         w3 = network_func(source_chain)
         fees = get_dynamic_gas_fees(w3) 
         max_fee_per_gas = fees["max_fee_per_gas"]
         gas_limit_est = get_gas_limit_estimate(w3, use_min=use_min, use_onchain_estimate=use_onchain_estimate)
         etherscan_estimate = ((gas_limit_est * max_fee_per_gas) / 1e18) * 1.25
-        print(f'etherscan_estimate: {etherscan_estimate}')
-        estimate = get_ccip_fee_estimate(
+        estimate_data = get_ccip_fee_estimate(
             to_address, dest_chain, amount,
             source_chain=source_chain,
             account_index=account_index,
             tx_type=tx_type,
             min_gas_threshold=etherscan_estimate
         )
-        estimate = estimate['total_estimate'] / 1e18
+
+        print(f'estimate: {estimate_data}')
+        print(f'estimate type: {type(estimate_data)}')
+        # breakpoint()
+        estimate = estimate_data['total_estimate'] / 1e18
+
+        account_obj = estimate_data["account_obj"]
+        source_chain = estimate_data["source_chain"]
+        TOKEN_CONTRACTS = estimate_data["TOKEN_CONTRACTS"]
+        TOKEN_DECIMALS = estimate_data["TOKEN_DECIMALS"]
+        account = account_obj["account"]
+        w3 = account_obj["w3"]
+        
 
     # === Prepare account + token data ===
     if account_obj is None:
+        print(f'account_obj is None')
         print(f'getting transfer data in send ccip transfer')
         print(f'source_chain: {source_chain}')
         transfer_data = prepare_transfer_data(
@@ -125,7 +136,6 @@ def send_ccip_transfer(to_address, dest_chain, amount,
         )
         account_obj = transfer_data["account"]
         source_chain = transfer_data["source_chain"]
-        account_index = transfer_data["account_index"]
         TOKEN_CONTRACTS = transfer_data["contracts"]
         TOKEN_DECIMALS = transfer_data["decimals"]
         account = account_obj["account"]
@@ -339,7 +349,6 @@ def get_ccip_fee_estimate(
     use_onchain_estimate=False,
     account_obj = None
 ):
-    print(f'min_gas_threshold at get_ccip_fee_estimate: {min_gas_threshold}')
     if not account_obj:
         print(f'at estimate getting transfer data')
         w3 = network_func(source_chain)
@@ -391,7 +400,7 @@ def get_ccip_fee_estimate(
     )
 
     raw_fee = router.functions.getFee(dest_selector, message).call()
-    fee = int(raw_fee * 1.1)  # 10% buffer
+    fee = int(raw_fee * 1.25)  # 10% buffer
 
     fees = get_dynamic_gas_fees(w3)
 
@@ -409,5 +418,9 @@ def get_ccip_fee_estimate(
         "priority_fee": fees['max_priority_fee'],
         "base_gas_price": fees['gas_price'],
         "currency": w3.eth.chain_id,
+        "account_obj": account_obj,
+        "source_chain":source_chain,
+        "TOKEN_CONTRACTS": TOKEN_CONTRACTS,
+        "TOKEN_DECIMALS": TOKEN_DECIMALS
     }
 
