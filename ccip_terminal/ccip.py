@@ -14,8 +14,8 @@ from ccip_terminal.env import ETHERSCAN_API_KEY
 from ccip_terminal.network import network_func
 from ccip_terminal.gas_estimation_script import estimate_gas_limit_from_recent_ccip
 from ccip_terminal.account_state import prepare_transfer_data, get_usdc_data
-from ccip_terminal.metadata import (CHAIN_MAP, FEE_TOKEN_ADDRESS, 
-                                    CHAIN_SELECTORS, ROUTER_MAP)
+from ccip_terminal.metadata import (CHAIN_MAP, FEE_TOKEN_ADDRESS, TOKEN_DECIMALS,
+                                    CHAIN_SELECTORS, ROUTER_MAP, USDC_MAP as TOKEN_CONTRACTS)
 
 abis = load_abi()
 ROUTER_ABI = abis['ccip_router_abi']
@@ -92,7 +92,7 @@ def send_ccip_transfer(to_address, dest_chain, amount,
         account = account_obj["account"]
         chain_id = w3.eth.chain_id
         source_chain = next((k for k, v in CHAIN_MAP.items() if v["chainID"] == chain_id), source_chain)
-        TOKEN_CONTRACTS, TOKEN_DECIMALS = get_usdc_data(get_balance_data=False)[1:3]
+        # TOKEN_CONTRACTS, TOKEN_DECIMALS = get_usdc_data(get_balance_data=False)[1:3]
 
     # === Estimate gas + fee if not provided ===
     if estimate is None and source_chain is None and account_obj is None:
@@ -110,24 +110,17 @@ def send_ccip_transfer(to_address, dest_chain, amount,
             min_gas_threshold=etherscan_estimate
         )
 
-        print(f'estimate: {estimate_data}')
-        print(f'estimate type: {type(estimate_data)}')
-        # breakpoint()
         estimate = estimate_data['total_estimate'] / 1e18
 
         account_obj = estimate_data["account_obj"]
         source_chain = estimate_data["source_chain"]
-        TOKEN_CONTRACTS = estimate_data["TOKEN_CONTRACTS"]
-        TOKEN_DECIMALS = estimate_data["TOKEN_DECIMALS"]
+        # TOKEN_CONTRACTS = estimate_data["TOKEN_CONTRACTS"]
+        # TOKEN_DECIMALS = estimate_data["TOKEN_DECIMALS"]
         account = account_obj["account"]
         w3 = account_obj["w3"]
         
-
     # === Prepare account + token data ===
     if account_obj is None:
-        print(f'account_obj is None')
-        print(f'getting transfer data in send ccip transfer')
-        print(f'source_chain: {source_chain}')
         transfer_data = prepare_transfer_data(
             dest_chain=dest_chain,
             source_chain=source_chain,
@@ -136,8 +129,8 @@ def send_ccip_transfer(to_address, dest_chain, amount,
         )
         account_obj = transfer_data["account"]
         source_chain = transfer_data["source_chain"]
-        TOKEN_CONTRACTS = transfer_data["contracts"]
-        TOKEN_DECIMALS = transfer_data["decimals"]
+        # TOKEN_CONTRACTS = transfer_data["contracts"]
+        # TOKEN_DECIMALS = transfer_data["decimals"]
         account = account_obj["account"]
         w3 = account_obj["w3"]
         print(f'source_chain after prepare transfer data in send ccip transfer: {source_chain}')
@@ -350,13 +343,11 @@ def get_ccip_fee_estimate(
     account_obj = None
 ):
     if not account_obj:
-        print(f'at estimate getting transfer data')
         w3 = network_func(source_chain)
         fees = get_dynamic_gas_fees(w3) 
         max_fee_per_gas = fees["max_fee_per_gas"]
         gas_limit_est = get_gas_limit_estimate(w3, use_min=use_min, use_onchain_estimate=use_onchain_estimate)
         etherscan_estimate = ((gas_limit_est * max_fee_per_gas) / 1e18) * 1.25
-        print(f'etherscan_estimate: {etherscan_estimate}')
         transfer_data = prepare_transfer_data(
             dest_chain=dest_chain,
             source_chain=source_chain,
@@ -376,11 +367,10 @@ def get_ccip_fee_estimate(
         # If w3/account provided directly, we still need metadata
         from ccip_terminal.metadata import CHAIN_SELECTORS, ROUTER_MAP
         from ccip_terminal.account_state import token_data, extract_token_contracts, extract_token_decimals, to_checksum_dict
-        print(f'Getting token data')
         w3 = account_obj['w3']
         usdc_data = token_data()
-        TOKEN_DECIMALS = extract_token_decimals(usdc_data)
-        TOKEN_CONTRACTS = to_checksum_dict(extract_token_contracts(usdc_data))
+        # TOKEN_DECIMALS = extract_token_decimals(usdc_data)
+        TOKEN_CONTRACTS = to_checksum_dict(TOKEN_CONTRACTS)
         usdc_price = usdc_data.get('market_data', {}).get('current_price', {}).get('usd', 1)
 
     router_address = resolve_router_address(source_chain)
@@ -398,7 +388,7 @@ def get_ccip_fee_estimate(
         amount=amount,
         fee_token=FEE_TOKEN_ADDRESS
     )
-
+    
     raw_fee = router.functions.getFee(dest_selector, message).call()
     fee = int(raw_fee * 1.25)  # 10% buffer
 

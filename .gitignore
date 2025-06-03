@@ -12,3 +12,4 @@ uv.lock
 *.ipynb
 *.ipynb_checkpoints
 requirements.txt
+*.2

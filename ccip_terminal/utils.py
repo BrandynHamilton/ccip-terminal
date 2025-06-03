@@ -166,7 +166,6 @@ def calculate_usd_values(BALANCES_DICT, usdc_price):
     return BALANCES_DICT
 
 def get_largest_balance(BALANCES_DICT, account_obj=None, min_gas_threshold=0.003, exclude_chain=None):
-    print(f'min_gas_threshold at get_largest_balance: {min_gas_threshold}')
     max_wallet = None
     max_network = None
     max_usdc_balance = 0.0

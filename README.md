@@ -2,21 +2,23 @@
 
 **ccip-terminal** is a Python package and CLI for managing cross-chain token transfers using Chainlink CCIP.
 
-The package can be thought as a self-custodial bridge; it supports batch transfers, fiat onramps, scheduled jobs, CCIP status monitoring, and address book utilities.
+The package can be considered a self-custodial bridge; it supports batch transfers, scheduled jobs, CCIP status monitoring, and address book utilities.
 
-For now the package **only supports USDC**; other currencies will be added later.
+For now the package **only supports USDC**; other currencies will be added later.  
+
+This package supports testnet CCIP as well.
 
 ## Installation
 
 ```bash
 # Install via uv
 pip install uv  # Only if not already installed
-uv pip install -e .[all] # For both core and scheduler packages
+uv pip install ccip_terminal[all] # For both core and scheduler packages
 
 # By name
-uv pip install ccip-terminal
+uv pip install ccip-terminal # Base library
 uv pip install ccip-terminal[scheduler]
-uv pip install ccip-terminal[all]
+uv pip install ccip-terminal[all] #Both base and scheduler 
 
 ```
 
@@ -42,7 +44,9 @@ Send a USDC transfer via Chainlink CCIP.
 | `--source`        | (optional) Source chain (default: ethereum) |
 | `--batch-file`    | (optional) Path to batch JSON or CSV file   |
 | `--account-index` | (optional) Account index to use             |
+| `--wait-status`   | (optional) Wait for CCIP Tx to Finalize     |
 | `--notify-email`  | (optional) Email address to notify          |
+| `--estimate`      | (optional) A Fee Estimate Value             |
 
 #### Examples
 
@@ -137,9 +141,6 @@ ccip_terminal/
 │   ├── accounts.py
 │   ├── env.py
 │   └── ...
-├── fiat_ramps/
-│   ├── transak.py
-│   └── webhook_server.py
 ├── scheduler/
 │   └── ...
 ├── address_book.json
@@ -163,9 +164,11 @@ SMTP_SERVER=
 SMTP_PORT=587
 SMTP_USER=
 SMTP_PASSWORD=
+NETWORK_TYPE=
 ```
 
 ## INFURA_API_KEY is the only required variable, but ETHERSCAN_API_KEY is also reccomended for accurate gas estimation.
+## NETWORK_TYPE environment variable expects either "testnet" or "mainnet", and defaults to "mainnet"
 
 ## License
 

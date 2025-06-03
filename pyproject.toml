@@ -8,7 +8,10 @@ version = "0.1.0"
 description = "Simple Cross-Chain Token Transfers Powered by CCIP"
 readme = "README.md"
 requires-python = ">=3.7"
-license = "MIT"
+
+
+[project.license]
+text = "MIT"
 
 authors = [
     { name = "Brandyn Hamilton", email = "brandynham1120@gmail.com" }

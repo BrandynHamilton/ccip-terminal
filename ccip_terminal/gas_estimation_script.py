@@ -58,7 +58,7 @@ def estimate_gas_limit_from_recent_ccip_dev(w3, days=5, etherscan_api_key=None, 
         return None, None, []
     
 
-def estimate_gas_limit_from_recent_ccip(w3, days=5, etherscan_api_key=None, max_txs=10):
+def estimate_gas_limit_from_recent_ccip(w3, days=30, etherscan_api_key=None, max_txs=10):
     if etherscan_api_key is None:
         etherscan_api_key = ETHERSCAN_API_KEY
 
@@ -105,5 +105,5 @@ def estimate_gas_limit_from_recent_ccip(w3, days=5, etherscan_api_key=None, max_
 
     except Exception as e:
         print(f"[Error] Failed to estimate gas limit: {e}")
-        return None, None, []
+        return None
 

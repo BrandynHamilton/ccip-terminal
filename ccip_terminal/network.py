@@ -21,11 +21,16 @@ def resolve_chain_name(name):
         return lookup[name]
     raise ValueError(f"Unknown chain name, alias, or coingecko name: {name}")
 
-def network_func(chain='ethereum', type='mainnet'):
+def network_func(chain='ethereum', type='sepolia'):
     if chain is None:
         chain='ethereum'
     chain = chain.lower()
     chain = resolve_chain_name(chain)  # Will raise ValueError if invalid
+
+    if chain == 'polygon':
+        type = 'amoy'
+    elif chain == 'avalanche':
+        type = 'fuji'
 
     chain_data = CHAIN_MAP[chain]
     alchemy_key = chain_data["alchemy"]

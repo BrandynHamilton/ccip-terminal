@@ -3,9 +3,10 @@ from ccip_terminal.utils import (extract_token_decimals,extract_token_contracts,
 from ccip_terminal.apis import token_data
 from ccip_terminal.accounts import load_accounts, network_func
 from ccip_terminal.token_utils import get_balance
+from ccip_terminal.metadata import USDC_MAP as TOKEN_CONTRACTS, TOKEN_DECIMALS
 import json
 
-def get_all_balances(TOKEN_CONTRACTS, TOKEN_DECIMALS, account_index=None, account_obj=None, only_chain=None):
+def get_all_balances(account_index=None, account_obj=None, only_chain=None):
     if isinstance(account_obj, dict):
         account_obj = [account_obj]
 
@@ -60,16 +61,14 @@ def prepare_transfer_data(dest_chain, source_chain=None, account_index=None, acc
     Dynamically selects account_index and source_chain if not provided.
     Always returns a single account object (with .w3) for the selected source_chain.
     """
-    print(f'min_gas_threshold at prepare transfer data: {min_gas_threshold}')
 
     # Load USDC metadata
     # Load USDC metadata
     usdc_data = token_data()
     usdc_price = usdc_data.get('market_data', {}).get('current_price', {}).get('usd', 1)
 
-    TOKEN_DECIMALS = extract_token_decimals(usdc_data)
-    TOKEN_CONTRACTS = extract_token_contracts(usdc_data)
-    TOKEN_CONTRACTS = to_checksum_dict(TOKEN_CONTRACTS)
+    # TOKEN_CONTRACTS = extract_token_contracts(usdc_data)
+    # TOKEN_CONTRACTS = to_checksum_dict(TOKEN_CONTRACTS)
 
     # Handle externally passed account_obj (Python SDK usage)
     if account_obj is not None:
@@ -97,8 +96,6 @@ def prepare_transfer_data(dest_chain, source_chain=None, account_index=None, acc
     
     # Get balances
     BALANCES_DICT = get_all_balances_simple(
-        TOKEN_CONTRACTS,
-        TOKEN_DECIMALS,
         account_obj_list,
         only_chain=source_chain
     )
@@ -139,7 +136,7 @@ def prepare_transfer_data(dest_chain, source_chain=None, account_index=None, acc
         "source_chain": source_chain
     }
 
-def get_all_balances_simple(TOKEN_CONTRACTS, TOKEN_DECIMALS, account_obj, only_chain=None):
+def get_all_balances_simple(account_obj, only_chain=None):
     BALANCE_DICT = {}
 
     for obj in account_obj:
@@ -192,8 +189,6 @@ def get_usdc_data(account_index=None, get_balance_data=True, account_obj=None):
 
     if get_balance_data:
         BALANCES_DICT, account_obj = get_all_balances(
-            TOKEN_CONTRACTS,
-            TOKEN_DECIMALS,
             account_index=account_index,
             account_obj=account_obj
         )
